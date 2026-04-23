@@ -559,6 +559,35 @@ body {
   box-shadow: var(--shadow);
 }
 
+/* Visitor Stats */
+.visitor-stats {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border-color);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.visitor-stats i {
+  color: var(--primary-color);
+  font-size: 0.9rem;
+}
+
+.visitor-stats .stats-divider {
+  color: var(--border-color);
+}
+
+#busuanzi_value_site_pv,
+#busuanzi_value_site_uv {
+  color: var(--primary-color);
+  font-weight: 600;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .resume-container {
@@ -625,7 +654,8 @@ body {
     box-shadow: none;
   }
 
-  .print-btn {
+  .print-btn,
+  .visitor-stats {
     display: none;
   }
 }
