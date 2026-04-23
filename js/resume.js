@@ -5,6 +5,55 @@
 (function() {
   'use strict';
 
+  // 等待统计脚本加载完成
+  function initStats() {
+    const checkStats = setInterval(() => {
+      const pvEl = document.getElementById('busuanzi_value_site_pv');
+      const uvEl = document.getElementById('busuanzi_value_site_uv');
+
+      if (pvEl && uvEl) {
+        // 检查是否已经有值了（脚本已加载）
+        if (pvEl.textContent !== '0' || uvEl.textContent !== '0') {
+          clearInterval(checkStats);
+          console.log('📊 统计已加载');
+          return;
+        }
+
+        // 如果5秒后还没加载，使用备用方案
+        setTimeout(() => {
+          if (pvEl.textContent === '0') {
+            // 尝试使用备用API
+            fetch('https://api.countapi.xyz/hit/ruanxinzhou.top/resume')
+              .then(res => res.json())
+              .then(data => {
+                if (data.value) {
+                  pvEl.textContent = data.value.toLocaleString();
+                  uvEl.textContent = '统计中';
+                }
+              })
+              .catch(() => {
+                // 使用本地存储作为最后的备用
+                let localPv = parseInt(localStorage.getItem('resume_pv') || '0') + 1;
+                localStorage.setItem('resume_pv', localPv);
+                pvEl.textContent = localPv.toLocaleString();
+                uvEl.textContent = '本地';
+              });
+          }
+          clearInterval(checkStats);
+        }, 5000);
+
+        clearInterval(checkStats);
+      }
+    }, 100);
+  }
+
+  // 页面加载完成后初始化统计
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStats);
+  } else {
+    initStats();
+  }
+
   // Smooth scroll for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
