@@ -123,10 +123,10 @@ flowchart TD
         P1 --> P2 --> P3 --> P4
     end
 
-    subgraph "第二阶段：生成"
-        G1["tsx-generator<br/>IR → React TSX<br/>组件树生成"]
-        G2["style-generator<br/>Fero 样式配置<br/>→ CSS Module"]
-        G3["api-generator<br/>Fero 数据源配置<br/>→ API 函数"]
+    subgraph "第二阶段：调用skill生成"
+        G1["skill-tsx-generator<br/>IR → React TSX<br/>组件树生成"]
+        G2["skill-style-generator<br/>Fero 样式配置<br/>→ CSS Module"]
+        G3["skill-api-generator<br/>Fero 数据源配置<br/>→ API 函数"]
         P4 --> G1 & G2 & G3
     end
 
@@ -261,7 +261,7 @@ export const OrderList = () => {
             <i class="fas fa-cogs"></i>
             <h4>规则化转换（覆盖 ~80%）</h4>
           </div>
-          <p>通过 <code>component-map.ts</code> 和 <code>prop-transformer.ts</code> 静态映射处理，速度快、结果稳定、可单测覆盖。</p>
+          <p>通过skill调用<code>component-map.ts</code> 和 <code>prop-transformer.ts</code> 静态映射处理，速度快、结果稳定、可单测覆盖。</p>
           <ul class="rvc-list">
             <li>标准布局组件：FeroForm → Form，FeroTable → Table</li>
             <li>基础 prop 映射：<code>dataSource</code>、<code>columns</code>、<code>rowKey</code></li>
