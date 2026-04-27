@@ -249,9 +249,9 @@
         </ul>
       </div>
 
-      <div class="project-card">
+      <div class="project-card project-card--migration">
         <div class="project-header">
-          <h3>烽火台后台管理系统</h3>
+          <h3>烽火台后台管理系统 <span class="project-badge project-badge--orange">AI 迁移</span></h3>
           <span class="project-role">前端开发 / 业务负责人</span>
           <span class="project-period">2023.06 - 至今</span>
         </div>
@@ -261,14 +261,57 @@
           <span class="tech-tag">TypeScript</span>
           <span class="tech-tag">Webpack</span>
           <span class="tech-tag">Monorepo</span>
+          <span class="tech-tag">Claude Code</span>
+          <span class="tech-tag">Multi-Agent</span>
         </div>
-        <p class="project-desc">负责骑手运营后台的前端开发，支撑多条业务线的管理侧需求。</p>
+        <p class="project-desc">负责骑手运营后台的前端开发，支撑多条业务线的管理侧需求。主导两项 AI 驱动的大规模迁移工程，实现存量页面的自动化转换与业务连续性保障。</p>
         <ul class="project-achievements">
           <li>基于配置驱动方案构建页面结构，减少重复开发，提升多业务模块的交付效率</li>
           <li>实现多复杂表单功能工程的融合和重构，实现业务平台化诉求</li>
-          <li>主导低代码平台迁移工作，借助 AI 工具实现存量页面至 React 工程的自动化转换，保障业务连续性</li>
           <li>参与 Monorepo 工程化建设，规范多包依赖管理与构建流程</li>
         </ul>
+
+        <!-- Sub-project: banma-migrator -->
+        <div class="sub-project">
+          <div class="sub-project-header">
+            <span class="sub-project-icon"><i class="fas fa-robot"></i></span>
+            <h4>banma-migrator — Vue2 → React AI 自动化迁移工具</h4>
+            <span class="sub-project-period">2025.03 - 2025.05</span>
+          </div>
+          <div class="sub-project-tech">
+            <span class="tech-tag tech-tag--accent">Claude Code</span>
+            <span class="tech-tag tech-tag--accent">Multi-Agent</span>
+            <span class="tech-tag">Vue 2</span>
+            <span class="tech-tag">React</span>
+            <span class="tech-tag">TypeScript</span>
+            <span class="tech-tag">FSD 架构</span>
+          </div>
+          <ul class="project-achievements sub-project-achievements">
+            <li><strong>全自动迁移流水线：</strong>设计并实现 9 步端到端迁移流程，11 个专职 Agent 协同工作，覆盖代码解析 → 逻辑提取 → React 生成 → 测试验证全链路，单页面迁移无需人工介入</li>
+            <li><strong>page-logic.json 中间产物：</strong>以机器可读的结构化 JSON 作为贯穿全流程的唯一数据契约，彻底解耦 Vue 解析与 React 生成两个阶段，支持断点续跑与局部重试</li>
+            <li><strong>FSD 架构落地：</strong>生成代码严格遵循 Feature-Sliced Design，逻辑层与 UI 层彻底分离，迁移产物直接符合团队 React 工程规范，零人工整改</li>
+            <li><strong>三层验证闭环：</strong>Page-Logic 语义校验 → 链路测试 → 行为等价测试（以旧页面为测试预言机，API 参数对比评分），迁移正确率显著提升</li>
+          </ul>
+        </div>
+
+        <!-- Sub-project: Fero 迁移 -->
+        <div class="sub-project">
+          <div class="sub-project-header">
+            <span class="sub-project-icon"><i class="fas fa-exchange-alt"></i></span>
+            <h4>Fero 低代码平台迁移套件</h4>
+            <span class="sub-project-period">2025.01 - 2025.03</span>
+          </div>
+          <div class="sub-project-tech">
+            <span class="tech-tag tech-tag--accent">Claude Code</span>
+            <span class="tech-tag">低代码平台</span>
+            <span class="tech-tag">React</span>
+            <span class="tech-tag">AST 解析</span>
+          </div>
+          <ul class="project-achievements sub-project-achievements">
+            <li><strong>迁移套件设计：</strong>基于 Claude Code 构建 Fero 低代码平台页面迁移套件，将平台导出的 DSL 配置自动转换为标准 React 组件，消除对低代码平台的运行时依赖</li>
+            <li><strong>批量迁移落地：</strong>完成烽火台系统内存量 Fero 页面的批量迁移，保障业务连续性，同时将页面纳入统一 Monorepo 工程管理，降低长期维护成本</li>
+          </ul>
+        </div>
       </div>
 
       <div class="project-card">
