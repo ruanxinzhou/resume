@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>banma-migrator - 项目详情 | 阮欣洲</title>
+  <meta name="description" content="banma-migrator — Vue2 → React AI 自动化迁移工具">
+  <link rel="stylesheet" href="/css/resume.css">
+  <link rel="stylesheet" href="/css/project-detail.css">
+  <link rel="stylesheet" href="/css/migration.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body class="project-page">
+
+  <a href="/" class="back-btn">
+    <i class="fas fa-arrow-left"></i>
+    <span>返回简历</span>
+  </a>
+
+  <!-- Hero -->
+  <section class="project-hero migration-hero">
+    <div class="hero-bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="project-badge migration-badge">
+        <i class="fas fa-robot"></i>
+        <span>AI 自动化迁移工具</span>
+      </div>
+      <h1 class="hero-title">banma-migrator</h1>
+      <p class="hero-subtitle">Vue2 → React 全自动迁移流水线 · 11 Agent 协同 · 9 步端到端 · 行为等价验证</p>
+      <div class="hero-meta">
+        <span class="meta-chip"><i class="fas fa-calendar-alt"></i> 2025.03 - 2025.05</span>
+        <span class="meta-chip"><i class="fas fa-user-tie"></i> 设计者 / 开发者</span>
+        <span class="meta-chip"><i class="fas fa-code-branch"></i> Claude Code · Multi-Agent</span>
+      </div>
+      <div class="hero-tech-stack">
+        <span class="tech-pill rn">Claude Code</span>
+        <span class="tech-pill vue">Vue 2</span>
+        <span class="tech-pill ts">React + TypeScript</span>
+        <span class="tech-pill mobx">FSD 架构</span>
+        <span class="tech-pill h5">AST 解析</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="project-detail-container">
+
+    <!-- 工程目录结构 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon migration-icon">
+          <i class="fas fa-folder-open"></i>
+        </div>
+        <h2>工程目录结构</h2>
+      </div>
+      <div class="dir-tree-wrapper">
+        <div class="dir-tree">
+          <div class="dir-line dir-root"><i class="fas fa-folder-open"></i> <span class="dir-name">banma-migrator/</span></div>
+          <div class="dir-line dir-l1"><i class="fas fa-folder"></i> <span class="dir-name">agents/</span> <span class="dir-comment">— 11 个专职 Agent，每个 Agent 对应一个迁移步骤</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">01-parse-vue.md</span> <span class="dir-comment">— Vue SFC 解析 Agent：提取 template / script / style</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">02-extract-logic.md</span> <span class="dir-comment">— 逻辑提取 Agent：生成 page-logic.json</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">03-validate-logic.md</span> <span class="dir-comment">— Logic 校验 Agent：语义完整性检查</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">04-gen-types.md</span> <span class="dir-comment">— 类型生成 Agent：从 logic 推导 TypeScript 类型</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">05-gen-store.md</span> <span class="dir-comment">— Store 生成 Agent：生成 FSD model 层</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">06-gen-api.md</span> <span class="dir-comment">— API 层生成 Agent：生成 FSD api 层</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">07-gen-ui.md</span> <span class="dir-comment">— UI 生成 Agent：生成 React 组件树</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">08-gen-tests.md</span> <span class="dir-comment">— 测试生成 Agent：生成链路测试 + 行为等价测试</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">09-review.md</span> <span class="dir-comment">— Review Agent：最终代码审查与修复</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">10-fix-lint.md</span> <span class="dir-comment">— Lint 修复 Agent</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">11-equivalence.md</span> <span class="dir-comment">— 行为等价测试 Agent：以旧页面为 Oracle 对比评分</span></div>
+          <div class="dir-line dir-l1"><i class="fas fa-folder"></i> <span class="dir-name">scripts/</span> <span class="dir-comment">— 流水线编排脚本</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">run-pipeline.sh</span> <span class="dir-comment">— 主入口：顺序调用 9 步流程</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">resume.sh</span> <span class="dir-comment">— 断点续跑：从指定步骤恢复</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">validate.sh</span> <span class="dir-comment">— 独立运行三层验证</span></div>
+          <div class="dir-line dir-l1"><i class="fas fa-folder"></i> <span class="dir-name">templates/</span> <span class="dir-comment">— FSD 目录模板与代码脚手架</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-folder"></i> <span class="dir-name">fsd-page/</span> <span class="dir-comment">— 标准 FSD page 目录骨架</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">page-logic.schema.json</span> <span class="dir-comment">— page-logic.json 的 JSON Schema 约束</span></div>
+          <div class="dir-line dir-l1"><i class="fas fa-folder"></i> <span class="dir-name">output/</span> <span class="dir-comment">— 迁移产物输出目录</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">page-logic.json</span> <span class="dir-comment">— 核心中间产物（贯穿全流程）</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-folder"></i> <span class="dir-name">react-page/</span> <span class="dir-comment">— 生成的 React 页面（FSD 结构）</span></div>
+          <div class="dir-line dir-l2"><i class="fas fa-folder"></i> <span class="dir-name">tests/</span> <span class="dir-comment">— 生成的测试文件</span></div>
+          <div class="dir-line dir-l1"><i class="fas fa-file-code"></i> <span class="dir-name">CLAUDE.md</span> <span class="dir-comment">— 全局上下文：约束所有 Agent 的行为规范</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 步流水线 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon migration-icon">
+          <i class="fas fa-stream"></i>
+        </div>
+        <h2>9 步迁移流水线</h2>
+      </div>
+      <div class="mermaid-wrapper">
+        <div class="mermaid">
+flowchart TD
+    IN["📄 输入\nVue2 SFC 源文件"] --> S1
+
+    S1["① Parse Vue\nAST 解析 SFC\ntemplate / script / style 分离"]
+    S2["② Extract Logic\n提取数据流、API 调用、事件处理\n→ 输出 page-logic.json"]
+    S3["③ Validate Logic\nJSON Schema 校验\n语义完整性检查"]
+    S4["④ Gen Types\n从 logic 推导\nTypeScript 接口与类型"]
+    S5["⑤ Gen Store\n生成 FSD model 层\nZustand / Jotai store"]
+    S6["⑥ Gen API\n生成 FSD api 层\n封装所有接口调用"]
+    S7["⑦ Gen UI\n生成 React 组件树\n严格对应 Vue template 结构"]
+    S8["⑧ Gen Tests\n生成链路测试\n+ 行为等价测试桩"]
+    S9["⑨ Review & Fix\nLint 修复 + 代码审查\n行为等价评分"]
+
+    OUT["✅ 输出\nFSD 结构 React 页面\n+ 测试文件"]
+
+    S1 --> S2 --> S3
+    S3 -->|"校验通过"| S4
+    S3 -->|"校验失败"| S2
+    S4 --> S5 --> S6 --> S7 --> S8 --> S9
+    S9 -->|"评分达标"| OUT
+    S9 -->|"评分不足"| S7
+
+    style IN fill:#f0f9ff,stroke:#0ea5e9
+    style S2 fill:#fef3c7,stroke:#f59e0b
+    style S3 fill:#fef3c7,stroke:#f59e0b
+    style S7 fill:#ede9fe,stroke:#8b5cf6
+    style S9 fill:#d1fae5,stroke:#10b981
+    style OUT fill:#dcfce7,stroke:#16a34a
+        </div>
+      </div>
+      <div class="pipeline-steps">
+        <div class="ps-item">
+          <div class="ps-num migration-num-bg">01</div>
+          <div class="ps-content">
+            <h4>Parse Vue — SFC 解析</h4>
+            <p>基于 <code>@vue/compiler-sfc</code> 将 Vue2 单文件组件拆解为 template AST、script 块、style 块三个独立部分，为后续 Agent 提供结构化输入，避免正则解析的脆弱性。</p>
+          </div>
+        </div>
+        <div class="ps-item">
+          <div class="ps-num migration-num-bg">02–03</div>
+          <div class="ps-content">
+            <h4>Extract + Validate Logic — 核心中间产物</h4>
+            <p>从 script AST 中提取 <code>data</code>、<code>computed</code>、<code>methods</code>、<code>watch</code>、API 调用、生命周期钩子，序列化为 <code>page-logic.json</code>，再经 JSON Schema 做语义完整性校验，失败则重提取。</p>
+          </div>
+        </div>
+        <div class="ps-item">
+          <div class="ps-num migration-num-bg">04–06</div>
+          <div class="ps-content">
+            <h4>Gen Types / Store / API — FSD 三层生成</h4>
+            <p>以 <code>page-logic.json</code> 为唯一数据源，依次生成 TypeScript 类型定义、FSD model 层（状态管理）、FSD api 层（接口封装），三层之间通过类型约束保持一致性。</p>
+          </div>
+        </div>
+        <div class="ps-item">
+          <div class="ps-num migration-num-bg">07</div>
+          <div class="ps-content">
+            <h4>Gen UI — React 组件生成</h4>
+            <p>以 template AST + page-logic.json 为双输入，将 Vue 模板结构映射为 React JSX 组件树，v-if/v-for/v-model 等指令逐一转换，组件只负责渲染，逻辑全部委托给 store/api 层。</p>
+          </div>
+        </div>
+        <div class="ps-item">
+          <div class="ps-num migration-num-bg">08–09</div>
+          <div class="ps-content">
+            <h4>Gen Tests + Review — 三层验证闭环</h4>
+            <p>生成链路测试（接口调用路径）和行为等价测试（以旧页面为 Oracle，对比 API 参数与响应处理），Review Agent 综合 Lint 结果与等价评分决定是否回退到 Gen UI 步骤重试。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- page-logic.json 数据结构 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon migration-icon">
+          <i class="fas fa-file-code"></i>
+        </div>
+        <h2>核心中间产物：page-logic.json</h2>
+        <span class="section-badge">贯穿全流程的唯一数据契约</span>
+      </div>
+      <div class="logic-json-layout">
+        <div class="logic-json-desc">
+          <p><code>page-logic.json</code> 是整个流水线的枢纽，由 Extract Logic Agent 生成，被后续所有 Agent 消费。它将 Vue2 的运行时语义转换为与框架无关的结构化描述，彻底解耦「解析阶段」与「生成阶段」，支持断点续跑与局部重试。</p>
+        </div>
+        <div class="code-block">
+          <div class="code-header">
+            <span class="code-lang">page-logic.json — 结构示意</span>
+          </div>
+          <pre><code>{
+  "meta": {
+    "sourcePath": "src/views/OrderList.vue",
+    "componentName": "OrderList"
+  },
+  "state": [
+    { "name": "list",       "type": "Order[]",  "initial": "[]" },
+    { "name": "loading",    "type": "boolean",  "initial": "false" },
+    { "name": "pagination", "type": "Pagination","initial": "{}" }
+  ],
+  "apis": [
+    {
+      "name": "fetchOrderList",
+      "method": "GET",
+      "url": "/api/order/list",
+      "params": ["pageNo", "pageSize", "status"],
+      "onSuccess": "list = data.list; pagination = data.page",
+      "onError":   "message.error(msg)"
+    }
+  ],
+  "lifecycle": {
+    "mounted": ["fetchOrderList"]
+  },
+  "events": [
+    {
+      "name": "handlePageChange",
+      "params": ["page"],
+      "body": "pagination.current = page; fetchOrderList()"
+    }
+  ],
+  "computed": [
+    { "name": "isEmpty", "deps": ["list"], "expr": "list.length === 0" }
+  ]
+}</code></pre>
+        </div>
+        <div class="logic-fields">
+          <div class="lf-item">
+            <span class="lf-key">meta</span>
+            <span class="lf-desc">源文件路径与组件名，用于生成 FSD 目录结构</span>
+          </div>
+          <div class="lf-item">
+            <span class="lf-key">state</span>
+            <span class="lf-desc">所有响应式状态，直接映射为 store 的 state 定义</span>
+          </div>
+          <div class="lf-item">
+            <span class="lf-key">apis</span>
+            <span class="lf-desc">接口调用描述，包含参数、成功/失败处理逻辑，映射为 api 层函数</span>
+          </div>
+          <div class="lf-item">
+            <span class="lf-key">lifecycle</span>
+            <span class="lf-desc">生命周期钩子映射，mounted → useEffect，destroyed → cleanup</span>
+          </div>
+          <div class="lf-item">
+            <span class="lf-key">events</span>
+            <span class="lf-desc">事件处理函数，映射为 store action 或组件内 handler</span>
+          </div>
+          <div class="lf-item">
+            <span class="lf-key">computed</span>
+            <span class="lf-desc">计算属性，映射为 useMemo / selector</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FSD 输出结构 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon migration-icon">
+          <i class="fas fa-layer-group"></i>
+        </div>
+        <h2>输出结构：Feature-Sliced Design</h2>
+      </div>
+      <div class="mermaid-wrapper">
+        <div class="mermaid">
+graph LR
+    subgraph "Vue2 输入结构（单文件耦合）"
+        V["OrderList.vue\n─────────────\ntemplate（UI）\nscript（逻辑+状态+API）\nstyle（样式）"]
+    end
+
+    subgraph "React 输出结构（FSD 分层）"
+        direction TB
+        UI["ui/\nOrderList.tsx\nOrderListItem.tsx\n（纯渲染，无业务逻辑）"]
+        MODEL["model/\nstore.ts\n（Zustand store）\nselectors.ts"]
+        API["api/\norderApi.ts\n（接口封装）\ntypes.ts"]
+        UI -->|"调用"| MODEL
+        MODEL -->|"调用"| API
+    end
+
+    V -->|"banma-migrator"| UI
+    V -->|"banma-migrator"| MODEL
+    V -->|"banma-migrator"| API
+
+    style V fill:#fee2e2,stroke:#ef4444
+    style UI fill:#ede9fe,stroke:#8b5cf6
+    style MODEL fill:#fef3c7,stroke:#f59e0b
+    style API fill:#d1fae5,stroke:#10b981
+        </div>
+      </div>
+      <div class="fsd-layers">
+        <div class="fsd-layer fsd-ui">
+          <div class="fsd-layer-header">
+            <i class="fas fa-desktop"></i>
+            <h4>ui/ — 纯渲染层</h4>
+          </div>
+          <p>React 组件只负责 JSX 渲染，通过 props 接收数据，通过 callback 触发事件，不直接调用 API，不持有业务状态。</p>
+        </div>
+        <div class="fsd-layer fsd-model">
+          <div class="fsd-layer-header">
+            <i class="fas fa-database"></i>
+            <h4>model/ — 状态层</h4>
+          </div>
+          <p>Zustand store 持有页面状态，action 封装业务逻辑，selector 封装派生数据。UI 层通过 hook 订阅，与渲染解耦。</p>
+        </div>
+        <div class="fsd-layer fsd-api">
+          <div class="fsd-layer-header">
+            <i class="fas fa-plug"></i>
+            <h4>api/ — 接口层</h4>
+          </div>
+          <p>所有 HTTP 请求集中在 api 层，包含请求参数类型、响应类型、错误处理。model 层通过 import 调用，不直接 fetch。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 三层验证闭环 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon migration-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h2>三层验证闭环</h2>
+      </div>
+      <div class="mermaid-wrapper">
+        <div class="mermaid">
+flowchart LR
+    subgraph "第一层：Logic 校验"
+        L1["page-logic.json\nJSON Schema 验证"]
+        L2["字段完整性\n类型合法性\n依赖关系检查"]
+        L1 --> L2
+    end
+
+    subgraph "第二层：链路测试"
+        T1["Mock API 环境\n运行生成的测试"]
+        T2["接口调用路径\n参数格式\n状态流转"]
+        T1 --> T2
+    end
+
+    subgraph "第三层：行为等价测试"
+        E1["旧页面（Vue2）\n作为 Oracle"]
+        E2["新页面（React）\n相同操作序列"]
+        E3["API 参数对比\n响应处理对比\n评分 ≥ 0.9 通过"]
+        E1 -->|"对比"| E2 --> E3
+    end
+
+    L2 -->|"通过"| T1
+    T2 -->|"通过"| E1
+    E3 -->|"不通过"| FIX["回退 Gen UI\n重新生成"]
+
+    style L1 fill:#fef3c7,stroke:#f59e0b
+    style T1 fill:#ede9fe,stroke:#8b5cf6
+    style E1 fill:#fee2e2,stroke:#ef4444
+    style E2 fill:#d1fae5,stroke:#10b981
+    style FIX fill:#f1f5f9,stroke:#94a3b8
+        </div>
+      </div>
+    </section>
+
+    <!-- Agent 分工 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon migration-icon">
+          <i class="fas fa-network-wired"></i>
+        </div>
+        <h2>11 Agent 分工与上下文隔离</h2>
+      </div>
+      <div class="agent-grid">
+        <div class="agent-card">
+          <div class="agent-num">01–03</div>
+          <div class="agent-info">
+            <h4>解析组</h4>
+            <p>Parse / Extract / Validate — 只读源文件，输出 page-logic.json，不接触目标框架代码</p>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-num">04–06</div>
+          <div class="agent-info">
+            <h4>生成组（逻辑层）</h4>
+            <p>Types / Store / API — 以 page-logic.json 为唯一输入，生成框架无关的逻辑层代码</p>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-num">07</div>
+          <div class="agent-info">
+            <h4>UI 生成</h4>
+            <p>Gen UI — 以 template AST + page-logic.json 双输入，生成 React 组件，只引用逻辑层 hook</p>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-num">08–09</div>
+          <div class="agent-info">
+            <h4>验证组</h4>
+            <p>Tests / Review — 生成测试、执行验证、综合评分，决定是否触发回退重试</p>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-num">10</div>
+          <div class="agent-info">
+            <h4>修复组</h4>
+            <p>Fix Lint — 独立处理 ESLint / TypeScript 编译错误，不修改业务逻辑</p>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="agent-num">11</div>
+          <div class="agent-info">
+            <h4>等价测试</h4>
+            <p>Equivalence — 驱动旧/新页面执行相同操作序列，捕获 API 调用差异并评分</p>
+          </div>
+        </div>
+      </div>
+      <div class="agent-isolation-note">
+        <i class="fas fa-info-circle"></i>
+        <p>每个 Agent 拥有独立的 CLAUDE.md 上下文文件，只加载当前步骤所需的信息，避免长上下文导致的注意力漂移。Agent 间通过文件系统（page-logic.json、生成产物）传递数据，不共享内存状态。</p>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="project-footer">
+    <a href="/" class="back-home-btn">
+      <i class="fas fa-home"></i>
+      <span>返回简历首页</span>
+    </a>
+    <a href="/projects/fero-migration.html" class="next-project-btn migration-next">
+      <span>查看 Fero 迁移套件</span>
+      <i class="fas fa-arrow-right"></i>
+    </a>
+  </footer>
+
+  <script src="/js/project-detail.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#fef3c7',
+        primaryTextColor: '#1e293b',
+        primaryBorderColor: '#f59e0b',
+        lineColor: '#94a3b8',
+        secondaryColor: '#f0f9ff',
+        tertiaryColor: '#f8fafc',
+        fontSize: '13px',
+      },
+      flowchart: { curve: 'basis', padding: 20 },
+    });
+  </script>
+</body>
+</html>

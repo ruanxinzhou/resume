@@ -1,0 +1,654 @@
+/* ===== Migration Project Pages (banma-migrator & fero-migration) ===== */
+
+/* ── Hero ── */
+.migration-hero {
+  background: linear-gradient(135deg, #7c2d12 0%, #c2410c 40%, #f97316 80%, #fbbf24 100%);
+}
+
+.fero-hero {
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 40%, #059669 80%, #34d399 100%);
+}
+
+.migration-badge {
+  background: rgba(251, 191, 36, 0.25);
+  border-color: rgba(251, 191, 36, 0.4);
+}
+
+.fero-badge {
+  background: rgba(52, 211, 153, 0.25);
+  border-color: rgba(52, 211, 153, 0.4);
+}
+
+.migration-icon {
+  background: linear-gradient(135deg, #f97316, #fbbf24);
+}
+
+.fero-icon {
+  background: linear-gradient(135deg, #059669, #34d399);
+}
+
+/* ── Directory Tree ── */
+.dir-tree-wrapper {
+  background: #0f172a;
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  overflow-x: auto;
+}
+
+.dir-tree {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.dir-line {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.dir-root { color: #f8fafc; font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+.dir-l1   { padding-left: 20px; color: #94a3b8; }
+.dir-l2   { padding-left: 44px; color: #64748b; }
+
+.dir-root i { color: #fbbf24; }
+.dir-l1 i   { color: #60a5fa; }
+.dir-l2 i   { color: #4ade80; }
+
+.dir-name    { color: #e2e8f0; font-weight: 500; }
+.dir-root .dir-name { color: #fbbf24; }
+.dir-comment { color: #475569; font-size: 0.76rem; margin-left: 4px; }
+
+/* ── Pipeline Steps ── */
+.pipeline-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.ps-item {
+  display: flex;
+  gap: 18px;
+  padding: 16px 20px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.ps-item:hover {
+  box-shadow: var(--shadow);
+  border-color: rgba(249, 115, 22, 0.25);
+}
+
+.ps-num {
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 52px;
+  font-family: 'Inter', sans-serif;
+}
+
+.migration-num-bg { color: rgba(249, 115, 22, 0.2); }
+.fero-num-bg      { color: rgba(5, 150, 105, 0.2); }
+
+.ps-content h4 {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 5px;
+}
+
+.ps-content p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.ps-content code {
+  background: rgba(249, 115, 22, 0.1);
+  color: #c2410c;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-family: 'Fira Code', 'Consolas', monospace;
+}
+
+/* ── Code Block ── */
+.code-block {
+  background: #0f172a;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.code-header {
+  padding: 8px 16px;
+  background: #1e293b;
+  border-bottom: 1px solid #334155;
+}
+
+.code-lang {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-family: 'Fira Code', monospace;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 18px 20px;
+  overflow-x: auto;
+}
+
+.code-block code {
+  font-family: 'Fira Code', 'Consolas', 'Monaco', monospace;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: #e2e8f0;
+  white-space: pre;
+}
+
+/* ── page-logic.json layout ── */
+.logic-json-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.logic-json-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.logic-json-desc code {
+  background: rgba(249, 115, 22, 0.1);
+  color: #c2410c;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-family: 'Fira Code', monospace;
+}
+
+.logic-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lf-item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.lf-key {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #c2410c;
+  background: rgba(249, 115, 22, 0.08);
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 90px;
+  text-align: center;
+}
+
+.lf-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* ── FSD Layers ── */
+.fsd-layers {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.fsd-layer {
+  padding: 18px 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.fsd-layer:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+
+.fsd-ui    { border-left: 3px solid #8b5cf6; background: rgba(139, 92, 246, 0.03); }
+.fsd-model { border-left: 3px solid #f59e0b; background: rgba(245, 158, 11, 0.03); }
+.fsd-api   { border-left: 3px solid #10b981; background: rgba(16, 185, 129, 0.03); }
+
+.fsd-layer-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.fsd-ui    .fsd-layer-header i { color: #8b5cf6; }
+.fsd-model .fsd-layer-header i { color: #f59e0b; }
+.fsd-api   .fsd-layer-header i { color: #10b981; }
+
+.fsd-layer-header h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.fsd-layer p {
+  font-size: 0.81rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ── Agent Grid ── */
+.agent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.agent-card {
+  display: flex;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--bg-subtle);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.agent-card:hover {
+  box-shadow: var(--shadow);
+  border-color: rgba(249, 115, 22, 0.25);
+}
+
+.agent-num {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: rgba(249, 115, 22, 0.2);
+  font-family: 'Inter', sans-serif;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 44px;
+}
+
+.agent-info h4 {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 5px;
+}
+
+.agent-info p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.agent-isolation-note {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: rgba(249, 115, 22, 0.05);
+  border-radius: var(--radius);
+  border: 1px solid rgba(249, 115, 22, 0.15);
+}
+
+.agent-isolation-note i {
+  color: #f97316;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.agent-isolation-note p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ── Fero Problem Grid ── */
+.fero-problem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.fero-problem-card {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.fp-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.fero-problem-before .fp-header {
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.fero-problem-after .fp-header {
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.fero-problem-before .fp-header i { color: #ef4444; }
+.fero-problem-after  .fp-header i { color: #10b981; }
+
+.fp-header h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.fp-arch {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.fp-layer {
+  width: 100%;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.fp-layer-runtime { background: rgba(239, 68, 68, 0.1);  color: #b91c1c; border: 1px solid rgba(239,68,68,0.2); }
+.fp-layer-dsl     { background: rgba(245, 158, 11, 0.1); color: #92400e; border: 1px solid rgba(245,158,11,0.2); }
+.fp-layer-render  { background: rgba(107, 114, 128, 0.1);color: #374151; border: 1px solid rgba(107,114,128,0.2); }
+.fp-layer-react   { background: rgba(139, 92, 246, 0.1); color: #5b21b6; border: 1px solid rgba(139,92,246,0.2); }
+.fp-layer-shared  { background: rgba(59, 130, 246, 0.1); color: #1d4ed8; border: 1px solid rgba(59,130,246,0.2); }
+.fp-layer-build   { background: rgba(16, 185, 129, 0.1); color: #065f46; border: 1px solid rgba(16,185,129,0.2); }
+
+.fp-arrow-down {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.fp-issues {
+  list-style: none;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.fp-issues li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.fp-issues li i { flex-shrink: 0; margin-top: 2px; }
+.fero-problem-before .fp-issues li i { color: #ef4444; }
+.fp-benefits li i { color: #10b981; }
+
+/* ── Transform Stages ── */
+.transform-stages {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.ts-stage {
+  flex: 1;
+  min-width: 240px;
+}
+
+.ts-stage-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  margin-bottom: 0;
+}
+
+.fero-stage-header { background: rgba(249, 115, 22, 0.08); border: 1px solid rgba(249,115,22,0.2); border-bottom: none; }
+.ir-stage-header   { background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245,158,11,0.2); border-bottom: none; }
+.tsx-stage-header  { background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139,92,246,0.2); border-bottom: none; }
+
+.ts-stage-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+  background: #f97316;
+}
+
+.ir-stage-header  .ts-stage-num { background: #f59e0b; }
+.tsx-stage-header .ts-stage-num { background: #8b5cf6; }
+
+.ts-stage-header h4 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.ts-stage-badge {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: 'Fira Code', monospace;
+  white-space: nowrap;
+}
+
+.ts-stage .code-block {
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+
+.ts-arrow {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  padding-top: 48px;
+  flex-shrink: 0;
+}
+
+/* ── Rule vs Claude ── */
+.rule-vs-claude {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.rvc-card {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  padding: 20px 22px;
+  transition: var(--transition);
+}
+
+.rvc-card:hover {
+  box-shadow: var(--shadow);
+}
+
+.rvc-rule  { border-top: 3px solid #10b981; }
+.rvc-claude { border-top: 3px solid #8b5cf6; }
+
+.rvc-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.rvc-rule   .rvc-header i { color: #10b981; }
+.rvc-claude .rvc-header i { color: #8b5cf6; }
+
+.rvc-header h4 {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.rvc-card > p {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.rvc-card > p code {
+  background: rgba(16, 185, 129, 0.1);
+  color: #065f46;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-family: 'Fira Code', monospace;
+}
+
+.rvc-claude > p code {
+  background: rgba(139, 92, 246, 0.1);
+  color: #5b21b6;
+}
+
+.rvc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rvc-list li {
+  font-size: 0.81rem;
+  color: var(--text-secondary);
+  padding-left: 14px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.rvc-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #10b981;
+}
+
+.rvc-claude .rvc-list li::before { color: #8b5cf6; }
+
+/* ── Monorepo Note ── */
+.monorepo-note {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: rgba(5, 150, 105, 0.05);
+  border-radius: var(--radius);
+  border: 1px solid rgba(5, 150, 105, 0.15);
+}
+
+.monorepo-note i {
+  color: #059669;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.monorepo-note p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.monorepo-note code {
+  background: rgba(5, 150, 105, 0.1);
+  color: #065f46;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-family: 'Fira Code', monospace;
+}
+
+/* ── Footer Buttons ── */
+.migration-next {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+}
+
+.migration-next:hover {
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);
+}
+
+.fero-next {
+  background: linear-gradient(135deg, #059669, #065f46);
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+}
+
+.fero-next:hover {
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.4);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .dir-tree-wrapper {
+    padding: 16px;
+  }
+
+  .dir-l1 { padding-left: 14px; }
+  .dir-l2 { padding-left: 28px; }
+
+  .transform-stages {
+    flex-direction: column;
+  }
+
+  .ts-arrow {
+    padding-top: 0;
+    transform: rotate(90deg);
+    align-self: center;
+  }
+
+  .fsd-layers,
+  .agent-grid,
+  .fero-problem-grid,
+  .rule-vs-claude {
+    grid-template-columns: 1fr;
+  }
+
+  .ps-item {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ps-num {
+    font-size: 1.2rem;
+    width: auto;
+  }
+}
