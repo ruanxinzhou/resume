@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>任务中心 - 项目详情 | 阮欣洲</title>
+  <meta name="description" content="任务中心项目详情 - 四端任务管理平台">
+  <link rel="stylesheet" href="/css/resume.css">
+  <link rel="stylesheet" href="/css/project-detail.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+</head>
+<body class="project-page">
+
+  <!-- 返回按钮 -->
+  <a href="/" class="back-btn">
+    <i class="fas fa-arrow-left"></i>
+    <span>返回简历</span>
+  </a>
+
+  <!-- Hero Section -->
+  <section class="project-hero task-hero">
+    <div class="hero-bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="project-badge">
+        <i class="fas fa-tasks"></i>
+        <span>核心业务平台</span>
+      </div>
+      <h1 class="hero-title">任务中心</h1>
+      <p class="hero-subtitle">四端一体化任务管理平台 · 覆盖运营、骑手、H5 全场景</p>
+      <div class="hero-meta">
+        <span class="meta-chip"><i class="fas fa-calendar-alt"></i> 2023.06 - 至今</span>
+        <span class="meta-chip"><i class="fas fa-user-tie"></i> 项目负责人 / 前端开发</span>
+        <span class="meta-chip"><i class="fas fa-mobile-alt"></i> 四端覆盖</span>
+      </div>
+      <div class="hero-tech-stack">
+        <span class="tech-pill vue">Vue 2</span>
+        <span class="tech-pill rn">React Native</span>
+        <span class="tech-pill mobx">MobX</span>
+        <span class="tech-pill ts">TypeScript</span>
+        <span class="tech-pill h5">H5</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="project-detail-container">
+
+    <!-- 项目概览 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon task-icon">
+          <i class="fas fa-sitemap"></i>
+        </div>
+        <h2>项目概览</h2>
+      </div>
+      <div class="overview-grid">
+        <div class="overview-card">
+          <div class="ov-icon"><i class="fas fa-bullseye"></i></div>
+          <h3>项目定位</h3>
+          <p>面向骑手运营场景的四端任务管理平台，统一管理运营侧任务配置与骑手侧任务执行，打通后台、App、H5 全链路。</p>
+        </div>
+        <div class="overview-card">
+          <div class="ov-icon"><i class="fas fa-users"></i></div>
+          <h3>服务对象</h3>
+          <p>运营人员（烽火台后台 + 星火 App）、骑手（骑手 App）、H5 工作日志页面，覆盖任务全生命周期管理。</p>
+        </div>
+        <div class="overview-card">
+          <div class="ov-icon"><i class="fas fa-layer-group"></i></div>
+          <h3>技术架构</h3>
+          <p>Vue 2 驱动后台管理端，React Native + MobX 驱动 App 端，H5 工作日志独立部署，四端共享接口协议。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 四端架构 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon task-icon">
+          <i class="fas fa-th-large"></i>
+        </div>
+        <h2>四端架构全景</h2>
+      </div>
+
+      <div class="platform-grid">
+
+        <!-- 烽火台后台 -->
+        <div class="platform-card" data-platform="admin">
+          <div class="platform-header">
+            <div class="platform-icon admin-icon">
+              <i class="fas fa-desktop"></i>
+            </div>
+            <div class="platform-info">
+              <h3>烽火台后台</h3>
+              <span class="platform-type">PC 管理端</span>
+            </div>
+            <div class="platform-tech-badge">Vue 2</div>
+          </div>
+          <div class="platform-body">
+            <p class="platform-desc">运营人员的任务配置与管理中心，支持任务全生命周期的创建、配置、发布与数据监控。</p>
+            <div class="feature-list">
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>任务模板创建与配置管理</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>任务发布、暂停、下线全流程</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>骑手任务完成数据看板</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>多维度任务筛选与批量操作</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 星火 App -->
+        <div class="platform-card" data-platform="xinghuo">
+          <div class="platform-header">
+            <div class="platform-icon xinghuo-icon">
+              <i class="fas fa-fire"></i>
+            </div>
+            <div class="platform-info">
+              <h3>星火 App</h3>
+              <span class="platform-type">运营管理 App</span>
+            </div>
+            <div class="platform-tech-badge rn-badge">React Native</div>
+          </div>
+          <div class="platform-body">
+            <p class="platform-desc">运营人员移动端管理工具，支持随时随地查看任务执行情况，处理异常任务与骑手反馈。</p>
+            <div class="feature-list">
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>任务执行进度实时监控</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>骑手任务完成情况查询</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>异常任务快速处理</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>消息推送与任务提醒</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 骑手 App -->
+        <div class="platform-card" data-platform="rider">
+          <div class="platform-header">
+            <div class="platform-icon rider-icon">
+              <i class="fas fa-motorcycle"></i>
+            </div>
+            <div class="platform-info">
+              <h3>骑手 App</h3>
+              <span class="platform-type">骑手执行端</span>
+            </div>
+            <div class="platform-tech-badge rn-badge">React Native</div>
+          </div>
+          <div class="platform-body">
+            <p class="platform-desc">骑手侧任务中心，展示可参与任务列表，支持任务报名、进度查看与奖励领取。</p>
+            <div class="feature-list">
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>任务列表展示与筛选</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>一键报名与任务接受</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>任务进度与完成状态追踪</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>奖励明细与历史记录</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- H5 工作日志 -->
+        <div class="platform-card" data-platform="h5">
+          <div class="platform-header">
+            <div class="platform-icon h5-icon">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <div class="platform-info">
+              <h3>H5 工作日志</h3>
+              <span class="platform-type">轻量 H5 页面</span>
+            </div>
+            <div class="platform-tech-badge h5-badge">H5</div>
+          </div>
+          <div class="platform-body">
+            <p class="platform-desc">骑手工作日志 H5 页面，记录每日工作轨迹与任务完成情况，支持分享与存档。</p>
+            <div class="feature-list">
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>每日工作数据汇总展示</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>任务完成时间线记录</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>分享海报生成</span>
+              </div>
+              <div class="feature-item">
+                <i class="fas fa-check-circle"></i>
+                <span>历史日志查询</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 技术亮点 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon task-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <h2>技术亮点</h2>
+      </div>
+      <div class="highlights-list">
+        <div class="highlight-item">
+          <div class="highlight-num">01</div>
+          <div class="highlight-content">
+            <h3>MobX 状态管理架构设计</h3>
+            <p>在 React Native 端采用 MobX 进行全局状态管理，设计任务状态树，实现跨组件数据共享与响应式更新，有效解决多端数据一致性问题，降低组件间耦合度。</p>
+            <div class="highlight-tags">
+              <span>MobX</span><span>状态管理</span><span>响应式</span>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">02</div>
+          <div class="highlight-content">
+            <h3>配置化任务模板渲染</h3>
+            <p>设计并落地页面配置化渲染协议，任务展示组件支持通过 JSON 配置驱动渲染，新业务接入无需修改核心代码，显著降低接入成本，支持多种任务类型快速扩展。</p>
+            <div class="highlight-tags">
+              <span>配置化</span><span>低代码</span><span>可扩展</span>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">03</div>
+          <div class="highlight-content">
+            <h3>四端统一接口协议</h3>
+            <p>与后端协同设计统一的任务数据协议，前端四端共享接口规范，减少重复对接成本。通过适配层处理各端差异，保证业务逻辑一致性的同时兼顾各端 UI 特性。</p>
+            <div class="highlight-tags">
+              <span>接口设计</span><span>多端适配</span><span>协议统一</span>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">04</div>
+          <div class="highlight-content">
+            <h3>从零到一主导建设</h3>
+            <p>主导骑手任务中心从 0 到 1 的完整建设，深度参与需求评审、技术方案设计、开发实现及上线全流程，积累了完整的平台化产品前端架构设计经验。</p>
+            <div class="highlight-tags">
+              <span>从零到一</span><span>架构设计</span><span>全流程</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 技术栈详情 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon task-icon">
+          <i class="fas fa-code"></i>
+        </div>
+        <h2>技术栈详情</h2>
+      </div>
+      <div class="tech-detail-grid">
+        <div class="tech-detail-card">
+          <div class="tdc-icon"><i class="fab fa-vuejs"></i></div>
+          <h3>Vue 2</h3>
+          <p>后台管理端核心框架，配合 Element UI 构建复杂表单与数据表格，支撑运营侧任务配置全流程。</p>
+        </div>
+        <div class="tech-detail-card">
+          <div class="tdc-icon"><i class="fab fa-react"></i></div>
+          <h3>React Native</h3>
+          <p>App 端核心框架，实现星火 App 与骑手 App 的任务中心模块，保证 iOS/Android 双端一致体验。</p>
+        </div>
+        <div class="tech-detail-card">
+          <div class="tdc-icon"><i class="fas fa-database"></i></div>
+          <h3>MobX</h3>
+          <p>App 端状态管理方案，通过 observable/action/computed 三层架构管理任务状态，实现高效响应式更新。</p>
+        </div>
+        <div class="tech-detail-card">
+          <div class="tdc-icon"><i class="fas fa-code"></i></div>
+          <h3>TypeScript</h3>
+          <p>全端类型约束，为任务数据模型、接口协议、组件 Props 提供完整类型定义，提升代码可维护性。</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="project-footer">
+    <a href="/" class="back-home-btn">
+      <i class="fas fa-home"></i>
+      <span>返回简历首页</span>
+    </a>
+    <a href="/projects/inspection.html" class="next-project-btn">
+      <span>查看巡检平台</span>
+      <i class="fas fa-arrow-right"></i>
+    </a>
+  </footer>
+
+  <script src="/js/project-detail.js"></script>
+</body>
+</html>

@@ -451,6 +451,53 @@ body {
   font-weight: 600;
 }
 
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border-color);
+}
+
+.project-detail-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  text-decoration: none;
+  border-radius: var(--radius);
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.project-detail-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+}
+
+.project-detail-btn:hover .btn-arrow {
+  transform: translateX(3px);
+}
+
+.btn-arrow {
+  font-size: 0.75rem;
+  transition: transform 0.2s ease;
+}
+
+.project-detail-btn--green {
+  background: linear-gradient(135deg, #059669, #10b981);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.project-detail-btn--green:hover {
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+}
+
 /* Education */
 .education-grid {
   display: grid;
