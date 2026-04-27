@@ -52,45 +52,6 @@
 
   <div class="project-detail-container">
 
-    <!-- 工程目录结构 -->
-    <section class="detail-section">
-      <div class="section-header">
-        <div class="section-icon migration-icon">
-          <i class="fas fa-folder-open"></i>
-        </div>
-        <h2>工程目录结构</h2>
-      </div>
-      <div class="dir-tree-wrapper">
-        <div class="dir-tree">
-          <div class="dir-line dir-root"><i class="fas fa-folder-open"></i> <span class="dir-name">banma-migrator/</span></div>
-          <div class="dir-line dir-l1"><i class="fas fa-folder"></i> <span class="dir-name">agents/</span> <span class="dir-comment">— 11 个专职 Agent，每个 Agent 对应一个迁移步骤</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">01-parse-vue.md</span> <span class="dir-comment">— Vue SFC 解析 Agent：提取 template / script / style</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">02-extract-logic.md</span> <span class="dir-comment">— 逻辑提取 Agent：生成 page-logic.json</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">03-validate-logic.md</span> <span class="dir-comment">— Logic 校验 Agent：语义完整性检查</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">04-gen-types.md</span> <span class="dir-comment">— 类型生成 Agent：从 logic 推导 TypeScript 类型</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">05-gen-store.md</span> <span class="dir-comment">— Store 生成 Agent：生成 FSD model 层</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">06-gen-api.md</span> <span class="dir-comment">— API 层生成 Agent：生成 FSD api 层</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">07-gen-ui.md</span> <span class="dir-comment">— UI 生成 Agent：生成 React 组件树</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">08-gen-tests.md</span> <span class="dir-comment">— 测试生成 Agent：生成链路测试 + 行为等价测试</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">09-review.md</span> <span class="dir-comment">— Review Agent：最终代码审查与修复</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">10-fix-lint.md</span> <span class="dir-comment">— Lint 修复 Agent</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">11-equivalence.md</span> <span class="dir-comment">— 行为等价测试 Agent：以旧页面为 Oracle 对比评分</span></div>
-          <div class="dir-line dir-l1"><i class="fas fa-folder"></i> <span class="dir-name">scripts/</span> <span class="dir-comment">— 流水线编排脚本</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">run-pipeline.sh</span> <span class="dir-comment">— 主入口：顺序调用 9 步流程</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">resume.sh</span> <span class="dir-comment">— 断点续跑：从指定步骤恢复</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">validate.sh</span> <span class="dir-comment">— 独立运行三层验证</span></div>
-          <div class="dir-line dir-l1"><i class="fas fa-folder"></i> <span class="dir-name">templates/</span> <span class="dir-comment">— FSD 目录模板与代码脚手架</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-folder"></i> <span class="dir-name">fsd-page/</span> <span class="dir-comment">— 标准 FSD page 目录骨架</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">page-logic.schema.json</span> <span class="dir-comment">— page-logic.json 的 JSON Schema 约束</span></div>
-          <div class="dir-line dir-l1"><i class="fas fa-folder"></i> <span class="dir-name">output/</span> <span class="dir-comment">— 迁移产物输出目录</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-file-code"></i> <span class="dir-name">page-logic.json</span> <span class="dir-comment">— 核心中间产物（贯穿全流程）</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-folder"></i> <span class="dir-name">react-page/</span> <span class="dir-comment">— 生成的 React 页面（FSD 结构）</span></div>
-          <div class="dir-line dir-l2"><i class="fas fa-folder"></i> <span class="dir-name">tests/</span> <span class="dir-comment">— 生成的测试文件</span></div>
-          <div class="dir-line dir-l1"><i class="fas fa-file-code"></i> <span class="dir-name">CLAUDE.md</span> <span class="dir-comment">— 全局上下文：约束所有 Agent 的行为规范</span></div>
-        </div>
-      </div>
-    </section>
-
     <!-- 9 步流水线 -->
     <section class="detail-section">
       <div class="section-header">
