@@ -263,14 +263,14 @@ flowchart TD
         <div class="mermaid">
 graph LR
     subgraph "Vue2 输入结构（单文件耦合）"
-        V["OrderList.vue\n─────────────\ntemplate（UI）\nscript（逻辑+状态+API）\nstyle（样式）"]
+        V["OrderList.vue<br/>─────────────<br/>template（UI）<br/>script（逻辑+状态+API）<br/>style（样式）"]
     end
 
     subgraph "React 输出结构（FSD 分层）"
         direction TB
-        UI["ui/\nOrderList.tsx\nOrderListItem.tsx\n（纯渲染，无业务逻辑）"]
-        MODEL["model/\nstore.ts\n（Zustand store）\nselectors.ts"]
-        API["api/\norderApi.ts\n（接口封装）\ntypes.ts"]
+        UI["ui/<br/>OrderList.tsx<br/>OrderListItem.tsx<br/>（纯渲染，无业务逻辑）"]
+        MODEL["model/<br/>store.ts<br/>（Zustand store）<br/>selectors.ts"]
+        API["api/<br/>orderApi.ts<br/>（接口封装）<br/>types.ts"]
         UI -->|"调用"| MODEL
         MODEL -->|"调用"| API
     end
@@ -322,27 +322,27 @@ graph LR
         <div class="mermaid">
 flowchart LR
     subgraph "第一层：Logic 校验"
-        L1["page-logic.json\nJSON Schema 验证"]
-        L2["字段完整性\n类型合法性\n依赖关系检查"]
+        L1["page-logic.json<br/>JSON Schema 验证"]
+        L2["字段完整性<br/>类型合法性<br/>依赖关系检查"]
         L1 --> L2
     end
 
     subgraph "第二层：链路测试"
-        T1["Mock API 环境\n运行生成的测试"]
-        T2["接口调用路径\n参数格式\n状态流转"]
+        T1["Mock API 环境<br/>运行生成的测试"]
+        T2["接口调用路径<br/>参数格式<br/>状态流转"]
         T1 --> T2
     end
 
     subgraph "第三层：行为等价测试"
-        E1["旧页面（Vue2）\n作为 Oracle"]
-        E2["新页面（React）\n相同操作序列"]
-        E3["API 参数对比\n响应处理对比\n评分 ≥ 0.9 通过"]
+        E1["旧页面（Vue2）<br/>作为 Oracle"]
+        E2["新页面（React）<br/>相同操作序列"]
+        E3["API 参数对比<br/>响应处理对比<br/>评分 ≥ 0.9 通过"]
         E1 -->|"对比"| E2 --> E3
     end
 
     L2 -->|"通过"| T1
     T2 -->|"通过"| E1
-    E3 -->|"不通过"| FIX["回退 Gen UI\n重新生成"]
+    E3 -->|"不通过"| FIX["回退 Gen UI<br/>重新生成"]
 
     style L1 fill:#fef3c7,stroke:#f59e0b
     style T1 fill:#ede9fe,stroke:#8b5cf6
