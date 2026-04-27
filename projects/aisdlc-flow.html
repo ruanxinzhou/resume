@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AISDLC Flow - 项目详情 | 阮欣洲</title>
+  <meta name="description" content="AISDLC Flow - AI 驱动的软件开发全生命周期平台">
+  <link rel="stylesheet" href="/css/resume.css">
+  <link rel="stylesheet" href="/css/project-detail.css">
+  <link rel="stylesheet" href="/css/aisdlc.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body class="project-page">
+
+  <a href="/" class="back-btn">
+    <i class="fas fa-arrow-left"></i>
+    <span>返回简历</span>
+  </a>
+
+  <!-- Hero -->
+  <section class="project-hero aisdlc-hero">
+    <div class="hero-bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="project-badge aisdlc-badge">
+        <i class="fas fa-robot"></i>
+        <span>AI 研发效能平台</span>
+      </div>
+      <h1 class="hero-title">AISDLC Flow</h1>
+      <p class="hero-subtitle">AI 驱动的软件开发全生命周期平台 · Spec-Driven · 多 Agent 协同 · 可视化工作流</p>
+      <div class="hero-meta">
+        <span class="meta-chip"><i class="fas fa-calendar-alt"></i> 2024.10 - 至今</span>
+        <span class="meta-chip"><i class="fas fa-user-tie"></i> 前端负责人 / 全栈参与</span>
+        <span class="meta-chip"><i class="fas fa-brain"></i> AI-SDLC 实践</span>
+      </div>
+      <div class="hero-tech-stack">
+        <span class="tech-pill rn">React</span>
+        <span class="tech-pill vue">Java Spring Boot</span>
+        <span class="tech-pill ts">TypeScript</span>
+        <span class="tech-pill mobx">Claude / Qwen</span>
+        <span class="tech-pill h5">MCP / Agent</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="project-detail-container">
+
+    <!-- 项目背景 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon aisdlc-icon">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+        <h2>项目背景</h2>
+      </div>
+      <div class="bg-content">
+        <div class="bg-quote">
+          <i class="fas fa-quote-left"></i>
+          <p>仅仅依靠单点的代码生成工具，无法带来工程效率的质变。真正的 AI 研发效能革命，不是让某一个环节快 10 倍，而是消除各个环节之间的「摩擦力」与「交接损耗」。</p>
+        </div>
+        <div class="bg-cards">
+          <div class="bg-card">
+            <div class="bg-card-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h3>痛点</h3>
+            <p>传统 AI 辅助开发局限于 IDE 代码补全，开发者需要极强的 Prompt 能力，上下文管理困难，复杂任务容易失控。</p>
+          </div>
+          <div class="bg-card">
+            <div class="bg-card-icon"><i class="fas fa-bullseye"></i></div>
+            <h3>目标</h3>
+            <p>构建端到端的 AI-SDLC 平台，将 Chat-based 交互升级为 Task-based 可视化工作流，让非研发人员也能通过 Spec 驱动软件交付。</p>
+          </div>
+          <div class="bg-card">
+            <div class="bg-card-icon"><i class="fas fa-trophy"></i></div>
+            <h3>成果</h3>
+            <p>跑通「产品/业务定义 Spec → AI 生成 → 研发把控边界与质量」的新一代研发流水线，实现简单需求的全流程 AI 闭环交付。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 核心架构流程图 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon aisdlc-icon">
+          <i class="fas fa-project-diagram"></i>
+        </div>
+        <h2>核心架构：AISDLC 全生命周期流程</h2>
+      </div>
+      <div class="mermaid-wrapper">
+        <div class="mermaid">
+flowchart TD
+    A["🧑‍💼 产品/业务人员\n提出需求"] --> B["📋 Spec 生成\n结构化技术契约"]
+    B --> C{"Spec 审核"}
+    C -->|"通过"| D["🤖 多 Agent 编排层\nAIDLC Flow 平台"]
+    C -->|"修改"| B
+
+    D --> E["📖 需求 Agent\n澄清歧义 · 拆解任务"]
+    D --> F["🏗️ 架构 Agent\n生成设计模式 · 技术方案"]
+    D --> G["💻 编码 Agent\nClaude / Qwen 代码生成"]
+    D --> H["🧪 QA Agent\n构建测试用例 · 自动验证"]
+
+    E --> I["Agent Loop\n计划 → 执行 → 评估 → 修复"]
+    F --> I
+    G --> I
+    H --> I
+
+    I --> J{"CI/CD 流水线\n自动化检测"}
+    J -->|"测试失败"| K["🔄 Agent 自主修复\n读取 Error Log → 反思 → 重试"]
+    K --> J
+    J -->|"全部通过"| L["👨‍💻 研发人工审核\n架构边界 · 安全合规"]
+    L -->|"批准"| M["🚀 自动部署上线"]
+    L -->|"拒绝"| I
+
+    style A fill:#f0f9ff,stroke:#0ea5e9
+    style B fill:#fef3c7,stroke:#f59e0b
+    style D fill:#ede9fe,stroke:#8b5cf6
+    style I fill:#d1fae5,stroke:#10b981
+    style M fill:#dcfce7,stroke:#16a34a
+        </div>
+      </div>
+    </section>
+
+    <!-- Spec-Driven 范式 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon aisdlc-icon">
+          <i class="fas fa-file-code"></i>
+        </div>
+        <h2>Spec-Driven 开发范式</h2>
+      </div>
+      <div class="spec-flow">
+        <div class="mermaid-wrapper">
+          <div class="mermaid">
+flowchart LR
+    subgraph "传统研发模式"
+        direction TB
+        T1["业务提出需求\n(模糊语言)"] --> T2["研发理解翻译\n(信息损耗)"] --> T3["编码实现\n(黑盒过程)"] --> T4["测试上线\n(反复返工)"]
+    end
+
+    subgraph "Spec-Driven 新范式"
+        direction TB
+        S1["业务/产品\n定义 Spec"] --> S2["AI 解析 Spec\n生成技术方案"] --> S3["多 Agent 并行\n代码生成"] --> S4["自动测试修复\n一键部署"]
+    end
+
+    T1 -.->|"范式升级"| S1
+
+    style T1 fill:#fee2e2,stroke:#ef4444
+    style T2 fill:#fee2e2,stroke:#ef4444
+    style T3 fill:#fee2e2,stroke:#ef4444
+    style T4 fill:#fee2e2,stroke:#ef4444
+    style S1 fill:#d1fae5,stroke:#10b981
+    style S2 fill:#d1fae5,stroke:#10b981
+    style S3 fill:#d1fae5,stroke:#10b981
+    style S4 fill:#d1fae5,stroke:#10b981
+          </div>
+        </div>
+        <div class="spec-desc">
+          <div class="spec-point">
+            <div class="sp-icon"><i class="fas fa-file-alt"></i></div>
+            <div>
+              <h3>Spec 即源代码</h3>
+              <p>结构化、无歧义的技术契约（Spec）成为新时代的源代码。AI 根据强约束的 Spec 直接生成最终代码，打破「业务提出 → 研发翻译实现」的隔离墙。</p>
+            </div>
+          </div>
+          <div class="spec-point">
+            <div class="sp-icon"><i class="fas fa-users"></i></div>
+            <div>
+              <h3>软件创造权民主化</h3>
+              <p>产品经理、业务运营甚至领域专家，只要能借助 AI 工具将模糊想法梳理成结构化 Spec，就能直接编译出可运行的软件功能。</p>
+            </div>
+          </div>
+          <div class="spec-point">
+            <div class="sp-icon"><i class="fas fa-folder-open"></i></div>
+            <div>
+              <h3>openspec 目录</h3>
+              <p>仓库中专设 <code>openspec/</code> 目录存放所有 Spec 文件，作为 AI Agent 的唯一输入源，确保生成代码与业务意图严格对齐。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 多 Agent 协同架构 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon aisdlc-icon">
+          <i class="fas fa-network-wired"></i>
+        </div>
+        <h2>多 Agent 协同架构</h2>
+      </div>
+      <div class="mermaid-wrapper">
+        <div class="mermaid">
+graph TB
+    subgraph "可视化平台层 (Frontend - React)"
+        UI["🖥️ 可视化工作流界面\n点击/拖拽/表单提交任务"]
+    end
+
+    subgraph "编排层 (Backend - Java Spring Boot)"
+        OR["🎯 Agent 路由编排器\n任务拆解 · 调度 · 上下文管理"]
+    end
+
+    subgraph "执行层 (Multi-Agent)"
+        AG1["📖 需求 Agent\n(Claude)"]
+        AG2["🏗️ 架构 Agent\n(Claude)"]
+        AG3["💻 编码 Agent\n(Claude / Qwen)"]
+        AG4["🔴 Generator Agent\n快速实现"]
+        AG5["🔵 Critic Agent\n安全审查 · 找漏洞"]
+    end
+
+    subgraph "工具层 (MCP / Skills)"
+        T1["代码仓库\n读写"]
+        T2["CI/CD\n流水线"]
+        T3["文档知识库\n(学城 KM)"]
+        T4["测试框架\n自动执行"]
+    end
+
+    UI --> OR
+    OR --> AG1 & AG2 & AG3
+    AG3 --> AG4
+    AG4 <-->|"红蓝对抗"| AG5
+    AG1 & AG2 & AG3 --> T1 & T2 & T3 & T4
+
+    style UI fill:#ede9fe,stroke:#8b5cf6
+    style OR fill:#fef3c7,stroke:#f59e0b
+    style AG4 fill:#fee2e2,stroke:#ef4444
+    style AG5 fill:#dbeafe,stroke:#3b82f6
+        </div>
+      </div>
+      <div class="agent-features">
+        <div class="af-card">
+          <div class="af-icon"><i class="fas fa-eye-slash"></i></div>
+          <h3>水面之下的复杂性</h3>
+          <p>用户操作简单的可视化 UI，底层自动将任务拆解并调用多个垂直能力 Agent 分工协作，将 Prompt 工程的门槛彻底隐藏。</p>
+        </div>
+        <div class="af-card">
+          <div class="af-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>红蓝对抗机制</h3>
+          <p>Generator Agent 负责快速实现需求，Critic/Security Agent 专门找茬、寻找边界 Case 和安全漏洞，通过高频对弈自动产出高健壮性代码。</p>
+        </div>
+        <div class="af-card">
+          <div class="af-icon"><i class="fas fa-sync-alt"></i></div>
+          <h3>Agent Loop 自愈</h3>
+          <p>测试失败或 CI 报错时，Agent 自主读取 Error Log、反思问题、修改代码并重新执行，直至绿灯通过，极大减少人类介入频次。</p>
+        </div>
+        <div class="af-card">
+          <div class="af-icon"><i class="fas fa-user-check"></i></div>
+          <h3>人在回路审批</h3>
+          <p>Agent 拥有无限草稿与运行权限，但在涉及环境变更、分支合并时，必须由研发工程师进行最终的架构和逻辑兜底，保障安全边界。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Agent Loop 详细流程 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon aisdlc-icon">
+          <i class="fas fa-redo-alt"></i>
+        </div>
+        <h2>Agent Loop：自动化修复闭环</h2>
+      </div>
+      <div class="mermaid-wrapper">
+        <div class="mermaid">
+stateDiagram-v2
+    [*] --> Plan : 接收 Spec / 任务
+    Plan --> Execute : 生成代码
+    Execute --> Evaluate : 运行测试 / CI
+    Evaluate --> Fix : 测试失败\n读取 Error Log
+    Fix --> Execute : 自主修复重试
+    Evaluate --> HumanReview : 全部通过
+    HumanReview --> Deploy : 人工批准
+    HumanReview --> Plan : 架构问题\n重新规划
+    Deploy --> [*]
+
+    Plan : 📋 Plan\n任务拆解 · 方案设计
+    Execute : ⚡ Execute\n代码生成 · 工具调用
+    Evaluate : 🔍 Evaluate\n测试执行 · 质量评估
+    Fix : 🔧 Fix\n错误分析 · 自主修复
+    HumanReview : 👨‍💻 Human Review\n架构审核 · 安全合规
+    Deploy : 🚀 Deploy\n自动部署上线
+        </div>
+      </div>
+    </section>
+
+    <!-- 技术亮点 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon aisdlc-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <h2>我的核心贡献</h2>
+      </div>
+      <div class="highlights-list">
+        <div class="highlight-item aisdlc-highlight">
+          <div class="highlight-num aisdlc-num">01</div>
+          <div class="highlight-content">
+            <h3>可视化工作流前端平台（React + TypeScript）</h3>
+            <p>负责 AISDLC Flow 前端平台的从零到一建设，将复杂的多 Agent 调度逻辑封装为直观的可视化界面。用户通过点击、拖拽或简单表单即可提交任务，无需了解底层 Prompt 工程，极大降低团队使用门槛。</p>
+            <div class="highlight-tags aisdlc-tags">
+              <span>React</span><span>TypeScript</span><span>可视化</span><span>工作流</span>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-item aisdlc-highlight">
+          <div class="highlight-num aisdlc-num">02</div>
+          <div class="highlight-content">
+            <h3>Spec-Driven 协议设计与落地</h3>
+            <p>参与设计 openspec 目录规范，制定结构化技术契约的格式标准，确保 AI Agent 能够准确解析业务意图并生成符合预期的代码。通过 Spec 作为唯一输入源，实现业务需求到代码实现的无损传递。</p>
+            <div class="highlight-tags aisdlc-tags">
+              <span>Spec-Driven</span><span>协议设计</span><span>AI 对齐</span>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-item aisdlc-highlight">
+          <div class="highlight-num aisdlc-num">03</div>
+          <div class="highlight-content">
+            <h3>多 AI 模型集成（Claude + Qwen）</h3>
+            <p>集成 Claude（.claude 配置）和通义千问（.qwen 配置）双模型，根据任务类型智能路由：复杂推理和代码审查使用 Claude，高频代码生成使用 Qwen，在质量与成本之间取得最优平衡。</p>
+            <div class="highlight-tags aisdlc-tags">
+              <span>Claude</span><span>Qwen</span><span>多模型路由</span><span>成本优化</span>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-item aisdlc-highlight">
+          <div class="highlight-num aisdlc-num">04</div>
+          <div class="highlight-content">
+            <h3>全栈开发实践（Java Spring Boot + React）</h3>
+            <p>在 AI 工具辅助下独立完成前后端全栈开发，后端基于 Java Spring Boot 构建 Agent 编排服务，前端 React 实现可视化交互层，通过 Maven 管理依赖，完整落地端到端的 AI 研发流水线。</p>
+            <div class="highlight-tags aisdlc-tags">
+              <span>全栈</span><span>Spring Boot</span><span>Maven</span><span>端到端</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 项目价值 -->
+    <section class="detail-section">
+      <div class="section-header">
+        <div class="section-icon aisdlc-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h2>项目价值与影响</h2>
+      </div>
+      <div class="value-grid">
+        <div class="value-card">
+          <div class="vc-icon"><i class="fas fa-rocket"></i></div>
+          <h3>研发效能跃升</h3>
+          <p>简单需求实现全流程 AI 闭环交付，从需求到上线的交付周期大幅压缩，人工介入节点显著减少。</p>
+        </div>
+        <div class="value-card">
+          <div class="vc-icon"><i class="fas fa-users-cog"></i></div>
+          <h3>全员开发者</h3>
+          <p>产品和业务人员通过可视化界面直接参与软件交付，打破研发与业务的传统壁垒，实现软件创造权民主化。</p>
+        </div>
+        <div class="value-card">
+          <div class="vc-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>质量有保障</h3>
+          <p>红蓝对抗 + Agent Loop 自愈机制，配合人在回路的最终审核，在提升效率的同时保证代码质量与安全合规。</p>
+        </div>
+        <div class="value-card">
+          <div class="vc-icon"><i class="fas fa-expand-arrows-alt"></i></div>
+          <h3>可扩展平台</h3>
+          <p>基于 MCP 标准协议构建工具层，Agent 能力可插拔扩展，平台架构支持接入更多 AI 模型和业务场景。</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="project-footer">
+    <a href="/" class="back-home-btn">
+      <i class="fas fa-home"></i>
+      <span>返回简历首页</span>
+    </a>
+    <a href="/projects/task-center.html" class="next-project-btn aisdlc-next">
+      <span>查看任务中心</span>
+      <i class="fas fa-arrow-right"></i>
+    </a>
+  </footer>
+
+  <script src="/js/project-detail.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#ede9fe',
+        primaryTextColor: '#1e293b',
+        primaryBorderColor: '#8b5cf6',
+        lineColor: '#94a3b8',
+        secondaryColor: '#f0f9ff',
+        tertiaryColor: '#f8fafc',
+        fontSize: '13px',
+      },
+      flowchart: { curve: 'basis', padding: 20 },
+      stateDiagram: { padding: 20 },
+    });
+  </script>
+</body>
+</html>
