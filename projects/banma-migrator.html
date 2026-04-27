@@ -34,7 +34,7 @@
         <span>AI 自动化迁移工具</span>
       </div>
       <h1 class="hero-title">banma-migrator</h1>
-      <p class="hero-subtitle">Vue2 → React 全自动迁移流水线 · 11 Agent 协同 · 9 步端到端 · 行为等价验证</p>
+      <p class="hero-subtitle">Vue2 → React 全自动迁移流水线 · 11 Agent 协同 · 端到端 · 行为等价验证</p>
       <div class="hero-meta">
         <span class="meta-chip"><i class="fas fa-calendar-alt"></i> 2025.03 - 2025.05</span>
         <span class="meta-chip"><i class="fas fa-user-tie"></i> 设计者 / 开发者</span>
@@ -52,53 +52,16 @@
 
   <div class="project-detail-container">
 
-    <!-- 9 步流水线 -->
+    <!-- 流水线 -->
     <section class="detail-section">
       <div class="section-header">
         <div class="section-icon migration-icon">
           <i class="fas fa-stream"></i>
         </div>
-        <h2>9 步迁移流水线</h2>
+        <h2>迁移流水线</h2>
       </div>
       <div class="svg-flow-wrapper">
         <img src="/assets/banma-migrator-flow.svg" alt="banma-migrator 整体流程图" class="svg-flow-img">
-      </div>
-      <div class="pipeline-steps">
-        <div class="ps-item">
-          <div class="ps-num migration-num-bg">01</div>
-          <div class="ps-content">
-            <h4>Parse Vue — SFC 解析</h4>
-            <p>基于 <code>@vue/compiler-sfc</code> 将 Vue2 单文件组件拆解为 template AST、script 块、style 块三个独立部分，为后续 Agent 提供结构化输入，避免正则解析的脆弱性。</p>
-          </div>
-        </div>
-        <div class="ps-item">
-          <div class="ps-num migration-num-bg">02–03</div>
-          <div class="ps-content">
-            <h4>Extract + Validate Logic — 核心中间产物</h4>
-            <p>从 script AST 中提取 <code>data</code>、<code>computed</code>、<code>methods</code>、<code>watch</code>、API 调用、生命周期钩子，序列化为 <code>page-logic.json</code>，再经 JSON Schema 做语义完整性校验，失败则重提取。</p>
-          </div>
-        </div>
-        <div class="ps-item">
-          <div class="ps-num migration-num-bg">04–06</div>
-          <div class="ps-content">
-            <h4>Gen Types / Store / API — FSD 三层生成</h4>
-            <p>以 <code>page-logic.json</code> 为唯一数据源，依次生成 TypeScript 类型定义、FSD model 层（状态管理）、FSD api 层（接口封装），三层之间通过类型约束保持一致性。</p>
-          </div>
-        </div>
-        <div class="ps-item">
-          <div class="ps-num migration-num-bg">07</div>
-          <div class="ps-content">
-            <h4>Gen UI — React 组件生成</h4>
-            <p>以 template AST + page-logic.json 为双输入，将 Vue 模板结构映射为 React JSX 组件树，v-if/v-for/v-model 等指令逐一转换，组件只负责渲染，逻辑全部委托给 store/api 层。</p>
-          </div>
-        </div>
-        <div class="ps-item">
-          <div class="ps-num migration-num-bg">08–09</div>
-          <div class="ps-content">
-            <h4>Gen Tests + Review — 三层验证闭环</h4>
-            <p>生成链路测试（接口调用路径）和行为等价测试（以旧页面为 Oracle，对比 API 参数与响应处理），Review Agent 综合 Lint 结果与等价评分决定是否回退到 Gen UI 步骤重试。</p>
-          </div>
-        </div>
       </div>
     </section>
 
