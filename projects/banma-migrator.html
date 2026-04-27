@@ -99,37 +99,8 @@
         </div>
         <h2>9 步迁移流水线</h2>
       </div>
-      <div class="mermaid-wrapper">
-        <div class="mermaid">
-flowchart TD
-    IN["📄 输入\nVue2 SFC 源文件"] --> S1
-
-    S1["① Parse Vue\nAST 解析 SFC\ntemplate / script / style 分离"]
-    S2["② Extract Logic\n提取数据流、API 调用、事件处理\n→ 输出 page-logic.json"]
-    S3["③ Validate Logic\nJSON Schema 校验\n语义完整性检查"]
-    S4["④ Gen Types\n从 logic 推导\nTypeScript 接口与类型"]
-    S5["⑤ Gen Store\n生成 FSD model 层\nZustand / Jotai store"]
-    S6["⑥ Gen API\n生成 FSD api 层\n封装所有接口调用"]
-    S7["⑦ Gen UI\n生成 React 组件树\n严格对应 Vue template 结构"]
-    S8["⑧ Gen Tests\n生成链路测试\n+ 行为等价测试桩"]
-    S9["⑨ Review & Fix\nLint 修复 + 代码审查\n行为等价评分"]
-
-    OUT["✅ 输出\nFSD 结构 React 页面\n+ 测试文件"]
-
-    S1 --> S2 --> S3
-    S3 -->|"校验通过"| S4
-    S3 -->|"校验失败"| S2
-    S4 --> S5 --> S6 --> S7 --> S8 --> S9
-    S9 -->|"评分达标"| OUT
-    S9 -->|"评分不足"| S7
-
-    style IN fill:#f0f9ff,stroke:#0ea5e9
-    style S2 fill:#fef3c7,stroke:#f59e0b
-    style S3 fill:#fef3c7,stroke:#f59e0b
-    style S7 fill:#ede9fe,stroke:#8b5cf6
-    style S9 fill:#d1fae5,stroke:#10b981
-    style OUT fill:#dcfce7,stroke:#16a34a
-        </div>
+      <div class="svg-flow-wrapper">
+        <img src="/assets/banma-migrator-flow.svg" alt="banma-migrator 整体流程图" class="svg-flow-img">
       </div>
       <div class="pipeline-steps">
         <div class="ps-item">

@@ -1,5 +1,23 @@
 /* ===== Migration Project Pages (banma-migrator & fero-migration) ===== */
 
+/* ── SVG Flow Diagram ── */
+.svg-flow-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border-color, #e2e8f0);
+  background: #fff;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.svg-flow-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 600px;
+}
+
 /* ── Hero ── */
 .migration-hero {
   background: linear-gradient(135deg, #7c2d12 0%, #c2410c 40%, #f97316 80%, #fbbf24 100%);
