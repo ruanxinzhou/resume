@@ -12,54 +12,69 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <style>
-    /* medium-zoom 背景 */
-    .medium-zoom-overlay {
-      background: rgba(15, 23, 42, 0.85) !important;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-    }
-    /* 放大后图片圆角 */
-    .medium-zoom-image--opened {
-      border-radius: 10px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
-    }
-    /* 悬浮关闭按钮 */
-    #mz-close-btn {
+    /* ── Lightbox overlay ── */
+    #img-lightbox {
       display: none;
       position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 99999;
-      width: 40px;
-      height: 40px;
-      border: none;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(10, 15, 30, 0.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      animation: lbFadeIn 0.2s ease;
+    }
+    #img-lightbox.open {
+      display: flex;
+    }
+    #img-lightbox img {
+      max-width: 94vw;
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+      animation: lbZoomIn 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      cursor: zoom-out;
+      display: block;
+    }
+    /* 关闭按钮：fixed 定位，永远在右上角 */
+    #img-lightbox-close {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 10000;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,0.25);
       border-radius: 50%;
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       color: #fff;
       font-size: 1rem;
       cursor: pointer;
+      display: flex;
       align-items: center;
       justify-content: center;
       transition: background 0.2s ease, transform 0.2s ease;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 2px 14px rgba(0,0,0,0.35);
     }
-    #mz-close-btn.visible {
-      display: flex;
-    }
-    #mz-close-btn:hover {
-      background: rgba(249,115,22,0.7);
+    #img-lightbox-close:hover {
+      background: rgba(249,115,22,0.75);
       transform: scale(1.1) rotate(90deg);
     }
-    /* 缩略图 hover 提示 */
-    .svg-flow-img {
-      cursor: zoom-in;
+    @keyframes lbFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
     }
+    @keyframes lbZoomIn {
+      from { opacity: 0; transform: scale(0.88); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    /* 缩略图鼠标样式 */
+    .svg-flow-img { cursor: zoom-in; }
   </style>
 </head>
 <body class="project-page">
@@ -109,7 +124,7 @@
         </div>
         <h2>迁移流水线</h2>
       </div>
-      <div class="svg-flow-wrapper">
+      <div class="svg-flow-wrapper" id="svgFlowWrapper">
         <img src="/assets/banma-migrator-flow.svg" alt="banma-migrator 整体流程图" class="svg-flow-img" id="svgFlowImg">
         <div class="svg-zoom-hint"><i class="fas fa-search-plus"></i> 点击放大</div>
       </div>
@@ -369,27 +384,43 @@ flowchart LR
     </a>
   </footer>
 
-  <!-- 悬浮关闭按钮（medium-zoom 打开时显示） -->
-  <button id="mz-close-btn" aria-label="关闭预览">
-    <i class="fas fa-times"></i>
-  </button>
+  <!-- Lightbox -->
+  <div id="img-lightbox">
+    <button id="img-lightbox-close" aria-label="关闭预览">
+      <i class="fas fa-times"></i>
+    </button>
+    <img src="/assets/banma-migrator-flow.svg" alt="banma-migrator 整体流程图">
+  </div>
 
   <script src="/js/project-detail.js"></script>
   <script>
+    // Lightbox
     (function () {
-      const img      = document.getElementById('svgFlowImg');
-      const closeBtn = document.getElementById('mz-close-btn');
+      const thumb    = document.getElementById('svgFlowImg');
+      const lightbox = document.getElementById('img-lightbox');
+      const closeBtn = document.getElementById('img-lightbox-close');
+      const lbImg    = lightbox.querySelector('img');
 
-      const zoom = mediumZoom(img, {
-        margin: 24,
-        background: 'rgba(15,23,42,0.85)',
-        scrollOffset: 0,
+      function openLb() {
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeLb() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      thumb.addEventListener('click', openLb);
+      // 点击背景（非图片区域）关闭
+      lightbox.addEventListener('click', function (e) {
+        if (e.target !== lbImg && e.target !== closeBtn && !closeBtn.contains(e.target)) {
+          closeLb();
+        }
       });
-
-      zoom.on('open',  () => closeBtn.classList.add('visible'));
-      zoom.on('close', () => closeBtn.classList.remove('visible'));
-
-      closeBtn.addEventListener('click', () => zoom.close());
+      closeBtn.addEventListener('click', closeLb);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeLb();
+      });
     })();
   </script>
   <script>
