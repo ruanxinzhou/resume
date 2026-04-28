@@ -33,7 +33,7 @@
         <span>核心业务平台</span>
       </div>
       <h1 class="hero-title">任务中心</h1>
-      <p class="hero-subtitle">四端一体化任务管理平台 · 覆盖运营、骑手、H5 全场景</p>
+      <p class="hero-subtitle">四端一体化任务管理平台 · AI 智能外呼下发 · 覆盖运营、骑手、H5 全场景</p>
       <div class="hero-meta">
         <span class="meta-chip"><i class="fas fa-calendar-alt"></i> 2023.06 - 至今</span>
         <span class="meta-chip"><i class="fas fa-user-tie"></i> 项目负责人 / 前端开发</span>
@@ -41,10 +41,13 @@
       </div>
       <div class="hero-tech-stack">
         <span class="tech-pill vue">Vue 2</span>
-        <span class="tech-pill rn">React Native</span>
+        <span class="tech-pill rn">React Native (MRN)</span>
         <span class="tech-pill mobx">MobX</span>
         <span class="tech-pill ts">TypeScript</span>
         <span class="tech-pill h5">H5</span>
+        <span class="tech-pill" style="background:rgba(139,92,246,0.15);color:#7c3aed;border:1px solid rgba(139,92,246,0.3);">Formily</span>
+        <span class="tech-pill" style="background:rgba(245,158,11,0.15);color:#b45309;border:1px solid rgba(245,158,11,0.3);">Ant Design 5</span>
+        <span class="tech-pill" style="background:rgba(16,185,129,0.15);color:#047857;border:1px solid rgba(16,185,129,0.3);">TanStack Query</span>
       </div>
     </div>
   </section>
@@ -244,35 +247,45 @@
         <div class="highlight-item">
           <div class="highlight-num">01</div>
           <div class="highlight-content">
-            <h3>MobX 状态管理架构设计</h3>
-            <p>在 React Native 端采用 MobX 进行全局状态管理，设计任务状态树，实现跨组件数据共享与响应式更新，有效解决多端数据一致性问题，降低组件间耦合度。</p>
+            <h3>AI 站长工作台：智能外呼任务下发</h3>
+            <p>在站长工作台（PC 端）实现 AI 驱动的任务创建与下发能力。运营人员配置任务场景、骑手范围与通话技能模板后，系统通过智能外呼（AI 电话）自动触达骑手，完成出勤检核、骑手招募等运营任务，无需人工逐一联系。</p>
             <div class="highlight-tags">
-              <span>MobX</span><span>状态管理</span><span>响应式</span>
+              <span>AI 外呼</span><span>任务自动化</span><span>站长工作台</span>
             </div>
           </div>
         </div>
         <div class="highlight-item">
           <div class="highlight-num">02</div>
           <div class="highlight-content">
-            <h3>配置化任务模板渲染</h3>
-            <p>设计并落地页面配置化渲染协议，任务展示组件支持通过 JSON 配置驱动渲染，新业务接入无需修改核心代码，显著降低接入成本，支持多种任务类型快速扩展。</p>
+            <h3>Schema 驱动的动态扩展表单</h3>
+            <p>基于 Formily 设计 Schema 注册表机制，不同任务场景（出勤检核、骑手招募等）的差异化表单字段由 JSON Schema 配置驱动，主表单无需感知场景细节。新增任务场景只需注册一份 Schema 文件，零改动主流程代码。骑手招募场景中，运力线、签约期数等字段通过 <code>useAsyncDataSource</code> 从接口动态拉取选项，并支持字段间联动（选运力线后自动过滤对应期数）。</p>
             <div class="highlight-tags">
-              <span>配置化</span><span>低代码</span><span>可扩展</span>
+              <span>Formily</span><span>Schema 注册表</span><span>动态表单</span><span>字段联动</span>
             </div>
           </div>
         </div>
         <div class="highlight-item">
           <div class="highlight-num">03</div>
           <div class="highlight-content">
-            <h3>四端统一接口协议</h3>
-            <p>与后端协同设计统一的任务数据协议，前端四端共享接口规范，减少重复对接成本。通过适配层处理各端差异，保证业务逻辑一致性的同时兼顾各端 UI 特性。</p>
+            <h3>双模式骑手圈选 + 文件上传</h3>
+            <p>骑手范围支持「画像选择」与「上传骑手 ID 文件」两种模式灵活切换。画像模式对接骑手画像平台，实时展示匹配人数；文件模式支持 CSV/Excel 拖拽上传，模板与通话技能模板绑定，切换技能模板时自动清空已上传文件，防止数据错配。</p>
             <div class="highlight-tags">
-              <span>接口设计</span><span>多端适配</span><span>协议统一</span>
+              <span>骑手画像</span><span>文件上传</span><span>双模式切换</span>
             </div>
           </div>
         </div>
         <div class="highlight-item">
           <div class="highlight-num">04</div>
+          <div class="highlight-content">
+            <h3>MobX 状态管理 + TanStack Query 数据层</h3>
+            <p>App 端采用 MobX 管理全局任务状态，实现跨组件响应式更新；PC 端任务创建弹窗使用 TanStack Query 统一管理异步请求（场景列表、骑手画像、任务提交），通过 <code>queryKey</code> 精确控制缓存与重新请求时机，避免重复请求与状态不一致。</p>
+            <div class="highlight-tags">
+              <span>MobX</span><span>TanStack Query</span><span>缓存策略</span>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-num">05</div>
           <div class="highlight-content">
             <h3>从零到一主导建设</h3>
             <p>主导骑手任务中心从 0 到 1 的完整建设，深度参与需求评审、技术方案设计、开发实现及上线全流程，积累了完整的平台化产品前端架构设计经验。</p>
@@ -296,11 +309,11 @@
         <div class="tech-detail-card">
           <div class="tdc-icon"><i class="fab fa-vuejs"></i></div>
           <h3>Vue 2</h3>
-          <p>后台管理端核心框架，配合 Element UI 构建复杂表单与数据表格，支撑运营侧任务配置全流程。</p>
+          <p>后台管理端（烽火台）核心框架，配合 Element UI 构建复杂表单与数据表格，支撑运营侧任务配置全流程。</p>
         </div>
         <div class="tech-detail-card">
           <div class="tdc-icon"><i class="fab fa-react"></i></div>
-          <h3>React Native</h3>
+          <h3>React Native (MRN)</h3>
           <p>App 端核心框架，实现星火 App 与骑手 App 的任务中心模块，保证 iOS/Android 双端一致体验。</p>
         </div>
         <div class="tech-detail-card">
@@ -311,7 +324,22 @@
         <div class="tech-detail-card">
           <div class="tdc-icon"><i class="fas fa-code"></i></div>
           <h3>TypeScript</h3>
-          <p>全端类型约束，为任务数据模型、接口协议、组件 Props 提供完整类型定义，提升代码可维护性。</p>
+          <p>全端类型约束，为任务数据模型、接口协议、Schema 定义、组件 Props 提供完整类型覆盖，提升代码可维护性。</p>
+        </div>
+        <div class="tech-detail-card">
+          <div class="tdc-icon" style="color:#7c3aed;"><i class="fas fa-layer-group"></i></div>
+          <h3>Formily</h3>
+          <p>阿里开源表单解决方案，用于 PC 端站长工作台任务创建弹窗的动态扩展表单，支持 Schema 驱动渲染、字段联动与异步数据源。</p>
+        </div>
+        <div class="tech-detail-card">
+          <div class="tdc-icon" style="color:#b45309;"><i class="fas fa-table"></i></div>
+          <h3>Ant Design 5</h3>
+          <p>PC 端 UI 组件库，提供 Form、Select、DatePicker、Upload 等核心组件，支撑站长工作台任务创建的完整交互流程。</p>
+        </div>
+        <div class="tech-detail-card">
+          <div class="tdc-icon" style="color:#047857;"><i class="fas fa-sync-alt"></i></div>
+          <h3>TanStack Query</h3>
+          <p>PC 端异步数据管理库，统一处理场景列表、骑手画像等接口请求的缓存、加载状态与错误处理，避免重复请求。</p>
         </div>
       </div>
     </section>

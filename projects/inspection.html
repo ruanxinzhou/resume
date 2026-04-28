@@ -11,10 +11,321 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    /* ── 配置化架构图专用样式 ── */
+    .config-arch {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0;
+      align-items: stretch;
+      margin-top: 8px;
+    }
+
+    .config-arch-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .config-arch-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .config-arch-arrow .arrow-line {
+      width: 2px;
+      flex: 1;
+      background: linear-gradient(to bottom, #10b981, #059669);
+      border-radius: 2px;
+    }
+
+    .config-arch-arrow .arrow-label {
+      writing-mode: vertical-rl;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #059669;
+      letter-spacing: 1px;
+      white-space: nowrap;
+      padding: 6px 0;
+    }
+
+    .config-arch-arrow i {
+      color: #059669;
+      font-size: 1rem;
+    }
+
+    /* 后台配置侧 */
+    .arch-admin-card {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .arch-admin-card .ac-title {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #15803d;
+      margin-bottom: 8px;
+    }
+
+    .arch-admin-card .ac-title i {
+      color: #16a34a;
+    }
+
+    .arch-admin-card .ac-items {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .arch-admin-card .ac-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: #166534;
+      line-height: 1.45;
+    }
+
+    .arch-admin-card .ac-item i {
+      color: #22c55e;
+      font-size: 0.7rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    /* 中间配置协议 */
+    .arch-protocol {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      border: 1.5px solid #fbbf24;
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+
+    .arch-protocol .ap-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #92400e;
+      margin-bottom: 6px;
+    }
+
+    .arch-protocol .ap-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .arch-protocol .ap-field {
+      font-size: 0.72rem;
+      color: #78350f;
+      background: rgba(255,255,255,0.5);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* App 渲染侧 */
+    .arch-app-card {
+      background: #eff6ff;
+      border: 1.5px solid #93c5fd;
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .arch-app-card .ac-title {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #1d4ed8;
+      margin-bottom: 8px;
+    }
+
+    .arch-app-card .ac-title i {
+      color: #3b82f6;
+    }
+
+    .arch-app-card .ac-items {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .arch-app-card .ac-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: #1e40af;
+      line-height: 1.45;
+    }
+
+    .arch-app-card .ac-item i {
+      color: #60a5fa;
+      font-size: 0.7rem;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    /* 零代码接入对比 */
+    .zero-code-compare {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 16px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .zcc-before, .zcc-after {
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+
+    .zcc-before {
+      background: #fef2f2;
+      border: 1.5px solid #fca5a5;
+    }
+
+    .zcc-after {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+    }
+
+    .zcc-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .zcc-before .zcc-label { color: #dc2626; }
+    .zcc-after  .zcc-label { color: #16a34a; }
+
+    .zcc-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .zcc-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+
+    .zcc-before .zcc-step { color: #991b1b; }
+    .zcc-after  .zcc-step { color: #166534; }
+
+    .zcc-step-num {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .zcc-before .zcc-step-num { background: #fee2e2; color: #dc2626; }
+    .zcc-after  .zcc-step-num { background: #dcfce7; color: #16a34a; }
+
+    .zcc-vs {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .zcc-vs-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f97316, #fbbf24);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 配置字段说明 */
+    .config-fields-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .cfg-field-card {
+      background: var(--bg-subtle, #f8fafc);
+      border: 1px solid var(--border-color, #e2e8f0);
+      border-radius: 8px;
+      padding: 12px 14px;
+      border-left: 3px solid #10b981;
+    }
+
+    .cfg-field-card .cfc-key {
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #059669;
+      margin-bottom: 4px;
+    }
+
+    .cfg-field-card .cfc-desc {
+      font-size: 0.76rem;
+      color: var(--text-secondary, #475569);
+      line-height: 1.45;
+    }
+
+    @media (max-width: 768px) {
+      .config-arch {
+        grid-template-columns: 1fr;
+      }
+      .config-arch-arrow {
+        flex-direction: row;
+        padding: 10px 0;
+      }
+      .config-arch-arrow .arrow-line {
+        width: auto;
+        height: 2px;
+        flex: 1;
+      }
+      .config-arch-arrow .arrow-label {
+        writing-mode: horizontal-tb;
+      }
+      .zero-code-compare {
+        grid-template-columns: 1fr;
+      }
+      .zcc-vs {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 <body class="project-page">
 
-  <!-- 返回按钮 -->
   <a href="/" class="back-btn">
     <i class="fas fa-arrow-left"></i>
     <span>返回简历</span>
@@ -33,11 +344,11 @@
         <span>运营管理平台</span>
       </div>
       <h1 class="hero-title">巡检平台</h1>
-      <p class="hero-subtitle">骑手运营巡检工单管理系统 · 10 种巡检类型 · 11 种工单状态</p>
+      <p class="hero-subtitle">骑手运营巡检工单管理系统 · 星火端全配置化 · 零代码接入新业务</p>
       <div class="hero-meta">
         <span class="meta-chip"><i class="fas fa-calendar-alt"></i> 2023.06 - 至今</span>
         <span class="meta-chip"><i class="fas fa-user-tie"></i> 项目负责人 / 前端开发</span>
-        <span class="meta-chip"><i class="fas fa-clipboard-list"></i> 工单全流程</span>
+        <span class="meta-chip"><i class="fas fa-sliders-h"></i> 配置驱动</span>
       </div>
       <div class="hero-tech-stack">
         <span class="tech-pill rn">React Native (MRN)</span>
@@ -50,106 +361,161 @@
 
   <div class="project-detail-container">
 
-    <!-- 项目概览 -->
+    <!-- 核心亮点：配置化架构 -->
     <section class="detail-section">
       <div class="section-header">
         <div class="section-icon inspection-icon">
-          <i class="fas fa-sitemap"></i>
+          <i class="fas fa-sliders-h"></i>
         </div>
-        <h2>项目概览</h2>
+        <h2>核心亮点：星火端全配置化架构</h2>
       </div>
-      <div class="overview-grid">
-        <div class="overview-card">
-          <div class="ov-icon inspection-ov"><i class="fas fa-bullseye"></i></div>
-          <h3>项目定位</h3>
-          <p>面向骑手运营场景的巡检工单管理系统，支持运营人员对骑手进行多维度巡检，覆盖 App 端执行与后台管理端配置全链路。</p>
+
+      <p style="font-size:0.87rem;color:var(--text-secondary);margin-bottom:20px;line-height:1.7;">
+        巡检平台星火 App 端的所有页面展示、入口跳转、表单结构、操作按钮均由后台线上配置驱动，App 本身不硬编码任何业务逻辑。新业务方接入时，<strong>运营人员在后台完成配置即可上线，无需前端开发介入，无需发版</strong>。
+      </p>
+
+      <div class="config-arch">
+        <!-- 左：后台配置 -->
+        <div class="config-arch-col">
+          <div class="arch-admin-card">
+            <div class="ac-title"><i class="fas fa-desktop"></i> 烽火台后台（Vue 2）</div>
+            <div class="ac-items">
+              <div class="ac-item"><i class="fas fa-check-circle"></i> 配置巡检入口：名称、图标、跳转路径</div>
+              <div class="ac-item"><i class="fas fa-check-circle"></i> 配置页面结构：卡片布局、字段展示顺序</div>
+              <div class="ac-item"><i class="fas fa-check-circle"></i> 配置操作按钮：文案、权限、触发动作</div>
+              <div class="ac-item"><i class="fas fa-check-circle"></i> 配置表单模板：三层嵌套检查项结构</div>
+              <div class="ac-item"><i class="fas fa-check-circle"></i> 配置跳转规则：条件跳转、外链、内页</div>
+            </div>
+          </div>
+          <div class="arch-protocol">
+            <div class="ap-title">📦 线上配置协议（JSON）</div>
+            <div class="ap-fields">
+              <span class="ap-field">entry[]  — 入口列表</span>
+              <span class="ap-field">layout   — 页面布局</span>
+              <span class="ap-field">actions[] — 操作按钮</span>
+              <span class="ap-field">form     — 表单结构</span>
+              <span class="ap-field">routes   — 跳转规则</span>
+            </div>
+          </div>
         </div>
-        <div class="overview-card">
-          <div class="ov-icon inspection-ov"><i class="fas fa-clipboard-check"></i></div>
-          <h3>核心能力</h3>
-          <p>支持 10 种巡检类型，工单流转涵盖 11 种状态，通过三层嵌套模板结构实现灵活的巡检内容配置，满足多样化运营场景。</p>
+
+        <!-- 中间箭头 -->
+        <div class="config-arch-arrow">
+          <div class="arrow-line"></div>
+          <i class="fas fa-chevron-right"></i>
+          <div class="arrow-label">实时下发</div>
+          <i class="fas fa-chevron-right"></i>
+          <div class="arrow-line"></div>
         </div>
-        <div class="overview-card">
-          <div class="ov-icon inspection-ov"><i class="fas fa-layer-group"></i></div>
-          <h3>技术架构</h3>
-          <p>App 端采用美团 MRN（React Native）框架，后台管理端基于 Vue 2，双端共享工单数据协议，保证业务逻辑一致性。</p>
+
+        <!-- 右：App 渲染 -->
+        <div class="config-arch-col">
+          <div class="arch-app-card">
+            <div class="ac-title"><i class="fas fa-mobile-alt"></i> 星火 App（MRN）</div>
+            <div class="ac-items">
+              <div class="ac-item"><i class="fas fa-magic"></i> 动态渲染入口列表，无硬编码路由</div>
+              <div class="ac-item"><i class="fas fa-magic"></i> 根据 layout 配置自动生成页面结构</div>
+              <div class="ac-item"><i class="fas fa-magic"></i> 按钮组件读取 actions 配置动态渲染</div>
+              <div class="ac-item"><i class="fas fa-magic"></i> 表单引擎解析三层嵌套结构并渲染</div>
+              <div class="ac-item"><i class="fas fa-magic"></i> 跳转逻辑由路由配置驱动，统一处理</div>
+            </div>
+          </div>
+          <div class="arch-app-card" style="background:#f5f3ff;border-color:#c4b5fd;">
+            <div class="ac-title" style="color:#6d28d9;"><i class="fas fa-bolt" style="color:#8b5cf6;"></i> 运行时能力</div>
+            <div class="ac-items">
+              <div class="ac-item" style="color:#4c1d95;"><i class="fas fa-sync-alt" style="color:#a78bfa;"></i> 配置热更新，无需重启 App</div>
+              <div class="ac-item" style="color:#4c1d95;"><i class="fas fa-shield-alt" style="color:#a78bfa;"></i> 配置版本管理，支持灰度下发</div>
+              <div class="ac-item" style="color:#4c1d95;"><i class="fas fa-fallback" style="color:#a78bfa;"></i> 配置异常时降级到默认视图</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 10 种巡检类型 -->
+    <!-- 零代码接入对比 -->
     <section class="detail-section">
       <div class="section-header">
         <div class="section-icon inspection-icon">
-          <i class="fas fa-list-ul"></i>
+          <i class="fas fa-code-branch"></i>
         </div>
-        <h2>10 种巡检类型</h2>
+        <h2>新业务方接入：零代码开发</h2>
       </div>
-      <div class="inspection-types-grid">
-        <div class="inspection-type-card" data-index="1">
-          <div class="it-number">01</div>
-          <div class="it-icon"><i class="fas fa-id-card"></i></div>
-          <h3>证件核验</h3>
-          <p>核验骑手身份证、驾驶证等证件有效性与真实性</p>
+
+      <div class="zero-code-compare">
+        <div class="zcc-before">
+          <div class="zcc-label"><i class="fas fa-times-circle"></i> 传统方式</div>
+          <div class="zcc-steps">
+            <div class="zcc-step">
+              <div class="zcc-step-num">1</div>
+              <span>前端开发新增路由与页面组件</span>
+            </div>
+            <div class="zcc-step">
+              <div class="zcc-step-num">2</div>
+              <span>硬编码入口、按钮、表单字段</span>
+            </div>
+            <div class="zcc-step">
+              <div class="zcc-step-num">3</div>
+              <span>联调测试、提测、发版上线</span>
+            </div>
+            <div class="zcc-step">
+              <div class="zcc-step-num">4</div>
+              <span>等待 App 审核 / 热更新推送</span>
+            </div>
+          </div>
         </div>
-        <div class="inspection-type-card" data-index="2">
-          <div class="it-number">02</div>
-          <div class="it-icon"><i class="fas fa-hard-hat"></i></div>
-          <h3>装备检查</h3>
-          <p>检查骑手头盔、保温箱、工服等配送装备规范性</p>
+
+        <div class="zcc-vs">
+          <div class="zcc-vs-badge">VS</div>
         </div>
-        <div class="inspection-type-card" data-index="3">
-          <div class="it-number">03</div>
-          <div class="it-icon"><i class="fas fa-motorcycle"></i></div>
-          <h3>车辆检查</h3>
-          <p>检查配送车辆安全状况、车牌合规性及车况</p>
+
+        <div class="zcc-after">
+          <div class="zcc-label"><i class="fas fa-check-circle"></i> 配置化方式</div>
+          <div class="zcc-steps">
+            <div class="zcc-step">
+              <div class="zcc-step-num">1</div>
+              <span>运营在烽火台后台填写配置表单</span>
+            </div>
+            <div class="zcc-step">
+              <div class="zcc-step-num">2</div>
+              <span>配置发布，App 实时拉取生效</span>
+            </div>
+            <div class="zcc-step">
+              <div class="zcc-step-num">✓</div>
+              <span><strong>无需前端开发，无需发版</strong></span>
+            </div>
+          </div>
         </div>
-        <div class="inspection-type-card" data-index="4">
-          <div class="it-number">04</div>
-          <div class="it-icon"><i class="fas fa-map-marker-alt"></i></div>
-          <h3>站点巡检</h3>
-          <p>对配送站点环境、设施及运营规范进行现场巡查</p>
+      </div>
+
+      <div class="config-fields-grid" style="margin-top:20px;">
+        <div class="cfg-field-card">
+          <div class="cfc-key">entry.icon / entry.title</div>
+          <div class="cfc-desc">入口图标与名称，支持线上 CDN 图片或内置图标枚举</div>
         </div>
-        <div class="inspection-type-card" data-index="5">
-          <div class="it-number">05</div>
-          <div class="it-icon"><i class="fas fa-user-check"></i></div>
-          <h3>行为规范</h3>
-          <p>检查骑手配送行为是否符合平台服务规范要求</p>
+        <div class="cfg-field-card">
+          <div class="cfc-key">entry.route / entry.params</div>
+          <div class="cfc-desc">跳转目标路径与参数，支持内页、H5、外链三种跳转类型</div>
         </div>
-        <div class="inspection-type-card" data-index="6">
-          <div class="it-number">06</div>
-          <div class="it-icon"><i class="fas fa-shield-alt"></i></div>
-          <h3>安全培训</h3>
-          <p>核查骑手安全培训完成情况与考核结果</p>
+        <div class="cfg-field-card">
+          <div class="cfc-key">layout.sections[]</div>
+          <div class="cfc-desc">页面分区配置，定义每个区块的展示字段、顺序与样式</div>
         </div>
-        <div class="inspection-type-card" data-index="7">
-          <div class="it-number">07</div>
-          <div class="it-icon"><i class="fas fa-star"></i></div>
-          <h3>服务质量</h3>
-          <p>评估骑手配送服务质量、用户评价与投诉处理</p>
+        <div class="cfg-field-card">
+          <div class="cfc-key">actions[].condition</div>
+          <div class="cfc-desc">按钮显示条件，支持基于工单状态、角色权限的动态显隐</div>
         </div>
-        <div class="inspection-type-card" data-index="8">
-          <div class="it-number">08</div>
-          <div class="it-icon"><i class="fas fa-clock"></i></div>
-          <h3>出勤核查</h3>
-          <p>核查骑手出勤记录、在线时长与接单情况</p>
+        <div class="cfg-field-card">
+          <div class="cfc-key">form.template_id</div>
+          <div class="cfc-desc">关联巡检模板 ID，App 自动拉取三层嵌套表单结构并渲染</div>
         </div>
-        <div class="inspection-type-card" data-index="9">
-          <div class="it-number">09</div>
-          <div class="it-icon"><i class="fas fa-exclamation-triangle"></i></div>
-          <h3>违规处理</h3>
-          <p>处理骑手违规行为，记录违规详情并跟进整改</p>
-        </div>
-        <div class="inspection-type-card" data-index="10">
-          <div class="it-number">10</div>
-          <div class="it-icon"><i class="fas fa-clipboard-list"></i></div>
-          <h3>专项巡检</h3>
-          <p>针对特定运营活动或节假日的专项合规检查</p>
+        <div class="cfg-field-card">
+          <div class="cfc-key">version / fallback</div>
+          <div class="cfc-desc">配置版本号与降级策略，支持灰度发布与异常兜底</div>
         </div>
       </div>
     </section>
 
-    <!-- 11 种工单状态流转 -->
+    <!-- 工单状态流转 -->
     <section class="detail-section">
       <div class="section-header">
         <div class="section-icon inspection-icon">
@@ -158,337 +524,76 @@
         <h2>工单状态流转</h2>
         <span class="section-badge">11 种状态</span>
       </div>
-      <div class="workflow-container">
-        <div class="workflow-desc">
-          <p>工单从创建到归档，经历完整的生命周期管理。每种状态对应明确的操作权限与流转规则，保证巡检流程的规范性与可追溯性。</p>
-        </div>
-        <div class="status-flow">
-          <div class="status-node status-create">
-            <div class="sn-dot"></div>
-            <div class="sn-content">
-              <span class="sn-label">待分配</span>
-              <span class="sn-desc">工单创建，等待分配巡检员</span>
-            </div>
-          </div>
-          <div class="flow-arrow"><i class="fas fa-chevron-down"></i></div>
-          <div class="status-node status-assigned">
-            <div class="sn-dot"></div>
-            <div class="sn-content">
-              <span class="sn-label">已分配</span>
-              <span class="sn-desc">已指派巡检员，等待接单</span>
-            </div>
-          </div>
-          <div class="flow-arrow"><i class="fas fa-chevron-down"></i></div>
-          <div class="status-node status-accepted">
-            <div class="sn-dot"></div>
-            <div class="sn-content">
-              <span class="sn-label">已接单</span>
-              <span class="sn-desc">巡检员确认接受工单</span>
-            </div>
-          </div>
-          <div class="flow-arrow"><i class="fas fa-chevron-down"></i></div>
-          <div class="status-node status-processing">
-            <div class="sn-dot"></div>
-            <div class="sn-content">
-              <span class="sn-label">巡检中</span>
-              <span class="sn-desc">巡检员正在执行现场巡检</span>
-            </div>
-          </div>
-          <div class="flow-arrow"><i class="fas fa-chevron-down"></i></div>
-          <div class="status-row">
-            <div class="status-node status-submitted">
-              <div class="sn-dot"></div>
-              <div class="sn-content">
-                <span class="sn-label">已提交</span>
-                <span class="sn-desc">巡检结果已提交，等待审核</span>
-              </div>
-            </div>
-            <div class="status-node status-rejected">
-              <div class="sn-dot"></div>
-              <div class="sn-content">
-                <span class="sn-label">已驳回</span>
-                <span class="sn-desc">审核不通过，需重新提交</span>
-              </div>
-            </div>
-          </div>
-          <div class="flow-arrow"><i class="fas fa-chevron-down"></i></div>
-          <div class="status-node status-reviewing">
-            <div class="sn-dot"></div>
-            <div class="sn-content">
-              <span class="sn-label">审核中</span>
-              <span class="sn-desc">管理员正在审核巡检结果</span>
-            </div>
-          </div>
-          <div class="flow-arrow"><i class="fas fa-chevron-down"></i></div>
-          <div class="status-row">
-            <div class="status-node status-passed">
-              <div class="sn-dot"></div>
-              <div class="sn-content">
-                <span class="sn-label">审核通过</span>
-                <span class="sn-desc">巡检结果审核通过</span>
-              </div>
-            </div>
-            <div class="status-node status-failed">
-              <div class="sn-dot"></div>
-              <div class="sn-content">
-                <span class="sn-label">审核不通过</span>
-                <span class="sn-desc">需整改后重新提交</span>
-              </div>
-            </div>
-          </div>
-          <div class="flow-arrow"><i class="fas fa-chevron-down"></i></div>
-          <div class="status-row">
-            <div class="status-node status-rectifying">
-              <div class="sn-dot"></div>
-              <div class="sn-content">
-                <span class="sn-label">整改中</span>
-                <span class="sn-desc">骑手/站点正在整改</span>
-              </div>
-            </div>
-            <div class="status-node status-expired">
-              <div class="sn-dot"></div>
-              <div class="sn-content">
-                <span class="sn-label">已超时</span>
-                <span class="sn-desc">工单超时未处理</span>
-              </div>
-            </div>
-          </div>
-          <div class="flow-arrow"><i class="fas fa-chevron-down"></i></div>
-          <div class="status-node status-closed">
-            <div class="sn-dot"></div>
-            <div class="sn-content">
-              <span class="sn-label">已归档</span>
-              <span class="sn-desc">工单完成，归档存储</span>
-            </div>
-          </div>
+      <div class="mermaid-wrapper">
+        <div class="mermaid">
+flowchart LR
+    S1(["待分配"]) --> S2(["已分配"])
+    S2 --> S3(["已接单"])
+    S3 --> S4(["巡检中"])
+    S4 --> S5(["已提交"])
+    S5 --> S6{"审核"}
+    S6 -->|"通过"| S7(["审核通过"])
+    S6 -->|"驳回"| S8(["已驳回"])
+    S8 -->|"重新提交"| S5
+    S7 --> S9{"整改?"}
+    S9 -->|"需整改"| S10(["整改中"])
+    S9 -->|"无需整改"| S11(["已归档"])
+    S10 --> S11
+    S4 -->|"超时"| S12(["已超时"])
+    S12 --> S11
+
+    style S1  fill:#f1f5f9,stroke:#94a3b8
+    style S2  fill:#dbeafe,stroke:#3b82f6
+    style S3  fill:#dbeafe,stroke:#3b82f6
+    style S4  fill:#fef3c7,stroke:#f59e0b
+    style S5  fill:#ede9fe,stroke:#8b5cf6
+    style S6  fill:#fef9c3,stroke:#ca8a04
+    style S7  fill:#dcfce7,stroke:#16a34a
+    style S8  fill:#fee2e2,stroke:#ef4444
+    style S9  fill:#fef9c3,stroke:#ca8a04
+    style S10 fill:#ffedd5,stroke:#f97316
+    style S11 fill:#d1fae5,stroke:#059669
+    style S12 fill:#fecaca,stroke:#dc2626
         </div>
       </div>
     </section>
 
-    <!-- 模板三层嵌套结构 -->
-    <section class="detail-section">
-      <div class="section-header">
-        <div class="section-icon inspection-icon">
-          <i class="fas fa-project-diagram"></i>
-        </div>
-        <h2>模板三层嵌套结构</h2>
-      </div>
-      <div class="template-structure">
-        <div class="template-desc">
-          <p>巡检模板采用三层嵌套设计，实现巡检内容的灵活配置与复用，支持运营人员按需组合不同检查项，快速搭建新的巡检场景。</p>
-        </div>
-        <div class="template-tree">
-          <div class="tree-level level-1">
-            <div class="tree-node node-template">
-              <div class="tn-icon"><i class="fas fa-file-alt"></i></div>
-              <div class="tn-content">
-                <h3>巡检模板</h3>
-                <p>顶层模板，定义巡检场景与整体配置，如「骑手装备专项巡检」</p>
-              </div>
-              <div class="tn-badge">第一层</div>
-            </div>
-          </div>
-          <div class="tree-connector">
-            <div class="connector-line"></div>
-            <div class="connector-branches">
-              <div class="branch"></div>
-              <div class="branch"></div>
-              <div class="branch"></div>
-            </div>
-          </div>
-          <div class="tree-level level-2">
-            <div class="tree-node node-group">
-              <div class="tn-icon"><i class="fas fa-folder"></i></div>
-              <div class="tn-content">
-                <h3>检查分组</h3>
-                <p>中间层，将检查项按类别分组，如「头盔检查」「工服检查」</p>
-              </div>
-              <div class="tn-badge">第二层</div>
-            </div>
-            <div class="tree-node node-group">
-              <div class="tn-icon"><i class="fas fa-folder"></i></div>
-              <div class="tn-content">
-                <h3>检查分组</h3>
-                <p>支持多个分组并行，每组独立评分与结论</p>
-              </div>
-              <div class="tn-badge">第二层</div>
-            </div>
-          </div>
-          <div class="tree-connector">
-            <div class="connector-line"></div>
-            <div class="connector-branches">
-              <div class="branch"></div>
-              <div class="branch"></div>
-              <div class="branch"></div>
-              <div class="branch"></div>
-            </div>
-          </div>
-          <div class="tree-level level-3">
-            <div class="tree-node node-item">
-              <div class="tn-icon"><i class="fas fa-check-square"></i></div>
-              <div class="tn-content">
-                <h3>检查项</h3>
-                <p>最小单元，支持文本、图片、选择、评分等多种输入类型</p>
-              </div>
-              <div class="tn-badge">第三层</div>
-            </div>
-            <div class="tree-node node-item">
-              <div class="tn-icon"><i class="fas fa-check-square"></i></div>
-              <div class="tn-content">
-                <h3>检查项</h3>
-                <p>每项可配置必填、评分权重、不合格触发规则</p>
-              </div>
-              <div class="tn-badge">第三层</div>
-            </div>
-            <div class="tree-node node-item">
-              <div class="tn-icon"><i class="fas fa-check-square"></i></div>
-              <div class="tn-content">
-                <h3>检查项</h3>
-                <p>支持关联整改工单，不合格项自动触发整改流程</p>
-              </div>
-              <div class="tn-badge">第三层</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 技术亮点 -->
+    <!-- 核心贡献 -->
     <section class="detail-section">
       <div class="section-header">
         <div class="section-icon inspection-icon">
           <i class="fas fa-star"></i>
         </div>
-        <h2>技术亮点</h2>
+        <h2>核心贡献</h2>
       </div>
       <div class="highlights-list">
         <div class="highlight-item inspection-highlight">
           <div class="highlight-num inspection-num">01</div>
           <div class="highlight-content">
-            <h3>MRN 框架深度应用</h3>
-            <p>基于美团自研 MRN（Meituan React Native）框架开发 App 端，充分利用 MRN 的热更新、性能优化与内部基础能力，实现复杂巡检表单的流畅渲染与高效交互。</p>
+            <h3>星火端配置化渲染引擎</h3>
+            <p>设计并实现 App 端配置驱动渲染架构，入口列表、页面布局、操作按钮、跳转规则全部由线上 JSON 配置驱动。新业务方接入无需任何前端代码改动，运营在后台配置后实时生效。</p>
             <div class="highlight-tags inspection-tags">
-              <span>MRN</span><span>热更新</span><span>性能优化</span>
+              <span>配置化</span><span>零代码接入</span><span>动态渲染</span>
             </div>
           </div>
         </div>
         <div class="highlight-item inspection-highlight">
           <div class="highlight-num inspection-num">02</div>
           <div class="highlight-content">
-            <h3>复杂工单状态机设计</h3>
-            <p>设计并实现 11 种工单状态的完整状态机，通过有限状态机模式管理状态流转逻辑，确保每种状态下的操作权限与 UI 展示正确，有效避免非法状态流转。</p>
+            <h3>三层嵌套动态表单引擎</h3>
+            <p>实现模板 → 分组 → 检查项三层嵌套结构的动态表单渲染，支持文本、图片、选择、评分等多种输入类型，不合格项自动触发整改工单，无需发版即可上线新巡检类型。</p>
             <div class="highlight-tags inspection-tags">
-              <span>状态机</span><span>工单流转</span><span>权限控制</span>
+              <span>动态表单</span><span>嵌套渲染</span><span>无需发版</span>
             </div>
           </div>
         </div>
         <div class="highlight-item inspection-highlight">
           <div class="highlight-num inspection-num">03</div>
           <div class="highlight-content">
-            <h3>三层嵌套动态表单渲染</h3>
-            <p>实现模板-分组-检查项三层嵌套结构的动态表单渲染引擎，支持运营人员在后台灵活配置巡检内容，App 端根据配置动态生成对应表单，无需发版即可上线新巡检类型。</p>
+            <h3>11 种状态的工单状态机</h3>
+            <p>设计完整的工单有限状态机，每种状态对应明确的操作权限与 UI 展示规则，有效避免非法状态流转。状态机与配置化按钮联动，按钮的显隐由状态 + 角色权限共同决定。</p>
             <div class="highlight-tags inspection-tags">
-              <span>动态表单</span><span>配置驱动</span><span>嵌套渲染</span>
-            </div>
-          </div>
-        </div>
-        <div class="highlight-item inspection-highlight">
-          <div class="highlight-num inspection-num">04</div>
-          <div class="highlight-content">
-            <h3>离线数据与断网容灾</h3>
-            <p>针对巡检场景可能出现的弱网/断网情况，设计本地数据缓存方案，支持离线填写巡检表单，网络恢复后自动同步，保证巡检数据不丢失。</p>
-            <div class="highlight-tags inspection-tags">
-              <span>离线缓存</span><span>容灾设计</span><span>数据同步</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 双端架构 -->
-    <section class="detail-section">
-      <div class="section-header">
-        <div class="section-icon inspection-icon">
-          <i class="fas fa-th-large"></i>
-        </div>
-        <h2>双端架构</h2>
-      </div>
-      <div class="dual-platform">
-        <div class="dp-card dp-app">
-          <div class="dp-header">
-            <div class="dp-icon"><i class="fas fa-mobile-alt"></i></div>
-            <div>
-              <h3>App 端（MRN）</h3>
-              <span>星火 App · 巡检执行</span>
-            </div>
-          </div>
-          <div class="dp-features">
-            <div class="dp-feature">
-              <i class="fas fa-map-marked-alt"></i>
-              <div>
-                <strong>现场巡检</strong>
-                <p>支持 GPS 定位打卡，确认巡检地点真实性</p>
-              </div>
-            </div>
-            <div class="dp-feature">
-              <i class="fas fa-camera"></i>
-              <div>
-                <strong>拍照取证</strong>
-                <p>支持拍照上传，图片自动压缩与 OCR 识别</p>
-              </div>
-            </div>
-            <div class="dp-feature">
-              <i class="fas fa-clipboard-check"></i>
-              <div>
-                <strong>动态表单</strong>
-                <p>根据模板配置动态渲染检查项，支持多种输入类型</p>
-              </div>
-            </div>
-            <div class="dp-feature">
-              <i class="fas fa-bell"></i>
-              <div>
-                <strong>消息推送</strong>
-                <p>工单状态变更实时推送，确保及时处理</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="dp-card dp-admin">
-          <div class="dp-header">
-            <div class="dp-icon admin-dp-icon"><i class="fas fa-desktop"></i></div>
-            <div>
-              <h3>后台管理端（Vue 2）</h3>
-              <span>烽火台 · 配置与管理</span>
-            </div>
-          </div>
-          <div class="dp-features">
-            <div class="dp-feature">
-              <i class="fas fa-cog"></i>
-              <div>
-                <strong>模板配置</strong>
-                <p>可视化配置三层嵌套巡检模板，支持拖拽排序</p>
-              </div>
-            </div>
-            <div class="dp-feature">
-              <i class="fas fa-tasks"></i>
-              <div>
-                <strong>工单管理</strong>
-                <p>全量工单列表，支持多维度筛选与批量操作</p>
-              </div>
-            </div>
-            <div class="dp-feature">
-              <i class="fas fa-chart-bar"></i>
-              <div>
-                <strong>数据统计</strong>
-                <p>巡检完成率、问题分布、整改跟进等数据看板</p>
-              </div>
-            </div>
-            <div class="dp-feature">
-              <i class="fas fa-user-shield"></i>
-              <div>
-                <strong>权限管理</strong>
-                <p>细粒度权限控制，支持多角色分级管理</p>
-              </div>
+              <span>状态机</span><span>权限控制</span><span>工单流转</span>
             </div>
           </div>
         </div>
@@ -497,7 +602,6 @@
 
   </div>
 
-  <!-- Footer -->
   <footer class="project-footer">
     <a href="/projects/task-center.html" class="back-home-btn">
       <i class="fas fa-arrow-left"></i>
@@ -510,5 +614,19 @@
   </footer>
 
   <script src="/js/project-detail.js"></script>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#dbeafe',
+        primaryTextColor: '#1e293b',
+        primaryBorderColor: '#3b82f6',
+        lineColor: '#94a3b8',
+        fontSize: '13px',
+      },
+      flowchart: { curve: 'basis', padding: 20 },
+    });
+  </script>
 </body>
 </html>

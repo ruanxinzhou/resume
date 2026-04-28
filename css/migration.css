@@ -2,6 +2,7 @@
 
 /* ── SVG Flow Diagram ── */
 .svg-flow-wrapper {
+  position: relative;
   width: 100%;
   overflow-x: auto;
   border-radius: 12px;
@@ -9,6 +10,13 @@
   background: #fff;
   padding: 16px;
   box-sizing: border-box;
+  cursor: zoom-in;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.svg-flow-wrapper:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-color: #f97316;
 }
 
 .svg-flow-img {
@@ -16,6 +24,112 @@
   width: 100%;
   height: auto;
   min-width: 600px;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* zoom hint badge */
+.svg-zoom-hint {
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: rgba(249, 115, 22, 0.88);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 500;
+  border-radius: 20px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.svg-flow-wrapper:hover .svg-zoom-hint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Lightbox ── */
+.svg-lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+
+.svg-lightbox.is-open {
+  display: flex;
+}
+
+.svg-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  animation: lbFadeIn 0.2s ease;
+}
+
+.svg-lightbox-content {
+  position: relative;
+  z-index: 1;
+  max-width: 95vw;
+  max-height: 92vh;
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  overflow: auto;
+  animation: lbSlideIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.svg-lightbox-img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 90vw;
+  max-height: 80vh;
+  min-width: 800px;
+}
+
+.svg-lightbox-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.08);
+  color: #374151;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.15s ease;
+  z-index: 2;
+}
+
+.svg-lightbox-close:hover {
+  background: rgba(249, 115, 22, 0.15);
+  color: #f97316;
+  transform: scale(1.1);
+}
+
+@keyframes lbFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes lbSlideIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 /* ── Hero ── */
