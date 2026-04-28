@@ -74,7 +74,9 @@
       to   { opacity: 1; transform: scale(1); }
     }
     /* 缩略图鼠标样式 */
-    .svg-flow-img { cursor: zoom-in; }
+    .svg-flow-wrapper { cursor: zoom-in; position: relative; }
+    .svg-flow-img { pointer-events: none; display: block; width: 100%; }
+    .svg-zoom-hint { pointer-events: none; }
   </style>
 </head>
 <body class="project-page">
@@ -396,7 +398,7 @@ flowchart LR
   <script>
     // Lightbox
     (function () {
-      const thumb    = document.getElementById('svgFlowImg');
+      const thumb    = document.getElementById('svgFlowWrapper');
       const lightbox = document.getElementById('img-lightbox');
       const closeBtn = document.getElementById('img-lightbox-close');
       const lbImg    = lightbox.querySelector('img');
