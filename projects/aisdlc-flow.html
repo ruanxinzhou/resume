@@ -388,20 +388,28 @@ stateDiagram-v2
 
   <script src="/js/project-detail.js"></script>
   <script>
-    mermaid.initialize({
-      startOnLoad: true,
-      theme: 'base',
-      themeVariables: {
-        primaryColor: '#ede9fe',
-        primaryTextColor: '#1e293b',
-        primaryBorderColor: '#8b5cf6',
-        lineColor: '#94a3b8',
-        secondaryColor: '#f0f9ff',
-        tertiaryColor: '#f8fafc',
-        fontSize: '13px',
-      },
-      flowchart: { curve: 'basis', padding: 20 },
-      stateDiagram: { padding: 20 },
+    document.addEventListener('DOMContentLoaded', function () {
+      if (!window.mermaid) return;
+
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: 'base',
+        themeVariables: {
+          primaryColor: '#ede9fe',
+          primaryTextColor: '#1e293b',
+          primaryBorderColor: '#8b5cf6',
+          lineColor: '#94a3b8',
+          secondaryColor: '#f0f9ff',
+          tertiaryColor: '#f8fafc',
+          fontSize: '13px',
+        },
+        flowchart: { curve: 'basis', padding: 20 },
+        stateDiagram: { padding: 20 },
+      });
+
+      mermaid.run({ querySelector: '.mermaid' }).catch(function (err) {
+        console.error('Mermaid render failed:', err);
+      });
     });
   </script>
 </body>
