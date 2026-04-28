@@ -12,7 +12,55 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <style>
+    /* medium-zoom 背景 */
+    .medium-zoom-overlay {
+      background: rgba(15, 23, 42, 0.85) !important;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    /* 放大后图片圆角 */
+    .medium-zoom-image--opened {
+      border-radius: 10px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+    }
+    /* 悬浮关闭按钮 */
+    #mz-close-btn {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 99999;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    #mz-close-btn.visible {
+      display: flex;
+    }
+    #mz-close-btn:hover {
+      background: rgba(249,115,22,0.7);
+      transform: scale(1.1) rotate(90deg);
+    }
+    /* 缩略图 hover 提示 */
+    .svg-flow-img {
+      cursor: zoom-in;
+    }
+  </style>
 </head>
 <body class="project-page">
 
@@ -61,18 +109,9 @@
         </div>
         <h2>迁移流水线</h2>
       </div>
-      <div class="svg-flow-wrapper" id="svgFlowWrapper">
-        <img src="/assets/banma-migrator-flow.svg" alt="banma-migrator 整体流程图" class="svg-flow-img" id="svgFlowImg" title="点击放大查看">
+      <div class="svg-flow-wrapper">
+        <img src="/assets/banma-migrator-flow.svg" alt="banma-migrator 整体流程图" class="svg-flow-img" id="svgFlowImg">
         <div class="svg-zoom-hint"><i class="fas fa-search-plus"></i> 点击放大</div>
-      </div>
-
-      <!-- Lightbox -->
-      <div class="svg-lightbox" id="svgLightbox">
-        <div class="svg-lightbox-backdrop" id="svgLightboxBackdrop"></div>
-        <div class="svg-lightbox-content">
-          <button class="svg-lightbox-close" id="svgLightboxClose"><i class="fas fa-times"></i></button>
-          <img src="/assets/banma-migrator-flow.svg" alt="banma-migrator 整体流程图" class="svg-lightbox-img">
-        </div>
       </div>
     </section>
 
@@ -330,24 +369,27 @@ flowchart LR
     </a>
   </footer>
 
+  <!-- 悬浮关闭按钮（medium-zoom 打开时显示） -->
+  <button id="mz-close-btn" aria-label="关闭预览">
+    <i class="fas fa-times"></i>
+  </button>
+
   <script src="/js/project-detail.js"></script>
   <script>
-    // SVG Lightbox
     (function () {
-      const wrapper  = document.getElementById('svgFlowWrapper');
-      const lightbox = document.getElementById('svgLightbox');
-      const backdrop = document.getElementById('svgLightboxBackdrop');
-      const closeBtn = document.getElementById('svgLightboxClose');
+      const img      = document.getElementById('svgFlowImg');
+      const closeBtn = document.getElementById('mz-close-btn');
 
-      function open()  { lightbox.classList.add('is-open');    document.body.style.overflow = 'hidden'; }
-      function close() { lightbox.classList.remove('is-open'); document.body.style.overflow = ''; }
-
-      wrapper.addEventListener('click', open);
-      backdrop.addEventListener('click', close);
-      closeBtn.addEventListener('click', close);
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') close();
+      const zoom = mediumZoom(img, {
+        margin: 24,
+        background: 'rgba(15,23,42,0.85)',
+        scrollOffset: 0,
       });
+
+      zoom.on('open',  () => closeBtn.classList.add('visible'));
+      zoom.on('close', () => closeBtn.classList.remove('visible'));
+
+      closeBtn.addEventListener('click', () => zoom.close());
     })();
   </script>
   <script>
