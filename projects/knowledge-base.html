@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MBSE 领域知识库与 RAG 检索系统 - 项目详情 | 阮欣洲</title>
+  <meta name="description" content="面向 MBSE 领域的知识库建设，基于 RAG 架构实现 SysML 模型知识检索，辅助 AI Agent 理解业务上下文">
+  <link rel="stylesheet" href="/css/resume.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --kb-navy: #0a1628;
+      --kb-navy-2: #13243d;
+      --kb-steel: #1e3a5f;
+      --kb-teal: #2d6a4f;
+      --kb-teal-2: #40916c;
+      --kb-amber: #d4a843;
+      --kb-paper: #f4f1ea;
+      --kb-paper-2: #ebe7dc;
+      --kb-ink: #1a1a1a;
+      --kb-graphite: #3a3a3a;
+      --kb-slate: #6b7280;
+      --kb-line: #c9c4b5;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'IBM Plex Sans', 'Noto Sans SC', sans-serif;
+      background: var(--kb-paper);
+      color: var(--kb-ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(10,22,40,0.012) 23px, rgba(10,22,40,0.012) 24px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: var(--kb-navy);
+      color: var(--kb-paper);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: 2px;
+      transition: all 0.2s;
+    }
+    .back-btn:hover { background: var(--kb-steel); transform: translateX(-2px); }
+
+    /* === HERO === */
+    .kb-hero {
+      background: linear-gradient(135deg, var(--kb-navy) 0%, var(--kb-navy-2) 40%, var(--kb-steel) 100%);
+      color: var(--kb-paper);
+      padding: 80px 40px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kb-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(45,106,79,0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(212,168,67,0.08) 0%, transparent 40%);
+    }
+    .kb-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    }
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--kb-amber);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .kb-hero h1 {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 36px;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .kb-hero .subtitle {
+      font-size: 16px;
+      color: rgba(244,241,234,0.7);
+      max-width: 600px;
+      line-height: 1.6;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: rgba(244,241,234,0.6);
+    }
+    .hero-meta-item i { color: var(--kb-teal-2); }
+
+    /* === SECTIONS === */
+    .kb-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 50px 40px;
+      position: relative;
+      z-index: 1;
+    }
+    .kb-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--kb-navy);
+    }
+    .kb-section-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--kb-amber);
+    }
+    .kb-section-title {
+      font-family: 'IBM Plex Sans', 'Noto Sans SC', sans-serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--kb-navy);
+    }
+    .kb-section-body {
+      font-size: 15px;
+      color: var(--kb-graphite);
+      line-height: 1.8;
+    }
+    .kb-section-body p { margin-bottom: 12px; }
+    .kb-section-body strong { color: var(--kb-navy); }
+
+    /* === ARCHITECTURE DIAGRAM === */
+    .arch-diagram {
+      background: white;
+      border: 1px solid var(--kb-line);
+      padding: 30px;
+      margin: 20px 0;
+      position: relative;
+    }
+    .arch-diagram::before {
+      content: 'FIG.1 — SYSTEM ARCHITECTURE';
+      position: absolute;
+      top: -8px;
+      left: 20px;
+      background: var(--kb-paper);
+      padding: 0 8px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--kb-slate);
+    }
+    .arch-layers {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .arch-layer {
+      display: flex;
+      align-items: stretch;
+      gap: 4px;
+    }
+    .arch-layer-label {
+      width: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--kb-slate);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-right: 2px solid var(--kb-line);
+    }
+    .arch-modules {
+      flex: 1;
+      display: flex;
+      gap: 4px;
+    }
+    .arch-module {
+      flex: 1;
+      padding: 14px 10px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: white;
+      position: relative;
+      transition: transform 0.2s;
+    }
+    .arch-module:hover { transform: translateY(-2px); }
+    .arch-module .icon { font-size: 18px; margin-bottom: 4px; display: block; }
+    .arch-module .desc { font-size: 9px; font-weight: 400; opacity: 0.8; margin-top: 2px; }
+    .mod-intake { background: var(--kb-steel); }
+    .mod-embed { background: var(--kb-navy-2); }
+    .mod-store { background: var(--kb-navy); }
+    .mod-retrieve { background: var(--kb-teal); }
+    .mod-rerank { background: var(--kb-teal-2); }
+    .mod-output { background: var(--kb-amber); color: var(--kb-navy); }
+
+    .arch-arrow {
+      text-align: center;
+      font-size: 16px;
+      color: var(--kb-slate);
+      margin: 2px 0;
+    }
+
+    /* === FLOW DIAGRAM === */
+    .flow-diagram {
+      background: var(--kb-navy);
+      color: var(--kb-paper);
+      padding: 30px;
+      margin: 20px 0;
+      border-radius: 2px;
+      position: relative;
+    }
+    .flow-diagram::before {
+      content: 'FIG.2 — RAG RETRIEVAL FLOW';
+      position: absolute;
+      top: -8px;
+      left: 20px;
+      background: var(--kb-navy);
+      padding: 0 8px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--kb-amber);
+    }
+    .flow-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .flow-step {
+      flex: 1;
+      min-width: 120px;
+      text-align: center;
+      padding: 16px 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 2px;
+      position: relative;
+    }
+    .flow-step .num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--kb-amber);
+      margin-bottom: 4px;
+    }
+    .flow-step .name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .flow-step .detail {
+      font-size: 10px;
+      color: rgba(244,241,234,0.5);
+    }
+    .flow-arrow {
+      color: var(--kb-teal-2);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* === CODE BLOCK === */
+    .code-block {
+      background: var(--kb-navy);
+      color: var(--kb-paper);
+      padding: 20px 24px;
+      margin: 16px 0;
+      border-radius: 2px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      overflow-x: auto;
+      position: relative;
+    }
+    .code-block::before {
+      content: 'PYTHON';
+      position: absolute;
+      top: 6px;
+      right: 12px;
+      font-size: 8px;
+      color: var(--kb-amber);
+      letter-spacing: 0.1em;
+    }
+    .code-block .kw { color: #c678dd; }
+    .code-block .str { color: #98c379; }
+    .code-block .fn { color: #61afef; }
+    .code-block .cm { color: #5c6370; font-style: italic; }
+    .code-block .var { color: #e06c75; }
+
+    /* === STATS === */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .stat-card {
+      background: white;
+      border: 1px solid var(--kb-line);
+      padding: 20px 16px;
+      text-align: center;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(10,22,40,0.1);
+    }
+    .stat-card .value {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--kb-navy);
+    }
+    .stat-card .unit {
+      font-size: 14px;
+      color: var(--kb-amber);
+    }
+    .stat-card .label {
+      font-size: 11px;
+      color: var(--kb-slate);
+      margin-top: 4px;
+    }
+    .stat-card .icon {
+      font-size: 20px;
+      color: var(--kb-teal);
+      margin-bottom: 8px;
+    }
+
+    /* === TECH STACK === */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .tech-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: white;
+      border-left: 3px solid var(--kb-teal);
+      transition: border-color 0.2s;
+    }
+    .tech-item:hover { border-left-color: var(--kb-amber); }
+    .tech-item .tech-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--kb-paper-2);
+      border-radius: 2px;
+      font-size: 16px;
+      color: var(--kb-navy);
+    }
+    .tech-item .tech-info .name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--kb-navy);
+    }
+    .tech-item .tech-info .role {
+      font-size: 10px;
+      color: var(--kb-slate);
+    }
+
+    /* === KNOWLEDGE TYPES === */
+ .knowledge-types {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .knowledge-card {
+      background: white;
+      border: 1px solid var(--kb-line);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .knowledge-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+    }
+    .knowledge-card.k1::before { background: var(--kb-steel); }
+    .knowledge-card.k2::before { background: var(--kb-teal); }
+    .knowledge-card.k3::before { background: var(--kb-amber); }
+    .knowledge-card .type-icon {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .knowledge-card.k1 .type-icon { color: var(--kb-steel); }
+    .knowledge-card.k2 .type-icon { color: var(--kb-teal); }
+    .knowledge-card.k3 .type-icon { color: var(--kb-amber); }
+    .knowledge-card .type-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--kb-navy);
+      margin-bottom: 6px;
+    }
+    .knowledge-card .type-desc {
+      font-size: 12px;
+      color: var(--kb-graphite);
+      line-height: 1.5;
+    }
+    .knowledge-card .type-tags {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .knowledge-card .type-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      padding: 2px 6px;
+      background: var(--kb-paper-2);
+      color: var(--kb-steel);
+    }
+
+    /* === AGENT SYNERGY === */
+    .synergy-diagram {
+      background: white;
+      border: 1px solid var(--kb-line);
+      padding: 30px;
+      margin: 20px 0;
+      position: relative;
+    }
+    .synergy-diagram::before {
+      content: 'FIG.3 — MULTI-AGENT KNOWLEDGE SYNERGY';
+      position: absolute;
+      top: -8px;
+      left: 20px;
+      background: var(--kb-paper);
+      padding: 0 8px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      color: var(--kb-slate);
+    }
+    .synergy-center {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .synergy-hub {
+      width: 140px;
+      height: 60px;
+      background: var(--kb-navy);
+      color: var(--kb-paper);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .synergy-hub .sub { font-size: 9px; font-weight: 400; color: var(--kb-amber); margin-top: 2px; }
+    .synergy-agents {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+    .synergy-agent {
+      text-align: center;
+      padding: 12px 6px;
+      background: var(--kb-paper-2);
+      border-top: 3px solid var(--kb-teal);
+      border-radius: 0 0 2px 2px;
+    }
+    .synergy-agent .agent-icon { font-size: 18px; color: var(--kb-teal); margin-bottom: 4px; }
+    .synergy-agent .agent-name { font-size: 11px; font-weight: 600; color: var(--kb-navy); }
+    .synergy-agent .agent-task { font-size: 9px; color: var(--kb-slate); margin-top: 2px; }
+
+    /* === DOC LINK === */
+    .doc-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: var(--kb-navy);
+      color: var(--kb-paper);
+      text-decoration: none;
+      margin: 20px 0;
+      transition: transform 0.2s;
+    }
+    .doc-link:hover { transform: translateX(4px); }
+    .doc-link .doc-icon { font-size: 20px; color: var(--kb-amber); }
+    .doc-link .doc-text { flex: 1; }
+    .doc-link .doc-title { font-size: 13px; font-weight: 600; }
+    .doc-link .doc-sub { font-size: 11px; color: rgba(244,241,234,0.5); }
+    .doc-link .doc-arrow { color: var(--kb-teal-2); }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .kb-hero { padding: 60px 20px 40px; }
+      .kb-hero h1 { font-size: 26px; }
+      .kb-section { padding: 30px 20px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .knowledge-types { grid-template-columns: 1fr; }
+      .synergy-agents { grid-template-columns: repeat(3, 1fr); }
+      .flow-steps { flex-direction: column; }
+      .flow-arrow { transform: rotate(90deg); }
+      .arch-layer-label { width: 80px; font-size: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="/" class="back-btn">
+  <i class="fas fa-arrow-left"></i>
+  <span>返回简历</span>
+</a>
+
+<!-- === HERO === -->
+<section class="kb-hero">
+  <div class="hero-content">
+    <div class="hero-tag">PROJECT DOSSIER · KB-001</div>
+    <h1>MBSE 领域知识库与 RAG 检索系统</h1>
+    <p class="subtitle">
+      面向系统工程领域的知识库建设，基于 RAG 架构实现 SysML 模型知识检索，
+      辅助 AI Agent 理解业务上下文。覆盖文档摄入、向量化、多路检索、重排序到 Agent 上下文增强的全链路。
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><i class="fas fa-calendar"></i> 2026.05 – 至今</div>
+      <div class="hero-meta-item"><i class="fas fa-user"></i> 核心开发者</div>
+      <div class="hero-meta-item"><i class="fas fa-building"></i> 烜翊数智科技</div>
+      <div class="hero-meta-item"><i class="fas fa-tag"></i> RAG / 知识库 / Agent</div>
+    </div>
+  </div>
+</section>
+
+<!-- === 01 BACKGROUND === -->
+<section class="kb-section">
+  <div class="kb-section-header">
+    <span class="kb-section-num">01</span>
+    <span class="kb-section-title">背景与挑战</span>
+  </div>
+  <div class="kb-section-body">
+    <p>
+      <strong>MBSE（基于模型的系统工程）</strong>平台需要处理大量 SysML 模型定义、工程文档和组件规范。
+      AI Agent 在执行建模任务时，需要理解这些领域知识才能生成正确的模型结构。
+      传统的关键词搜索无法理解模型间的语义关系——比如"状态机"和"状态转换"在关键词层面完全不同，但在 SysML 语义中是强关联的。
+    </p>
+    <p>
+      核心挑战包括：<strong>(1)</strong> SysML 模型定义的半结构化特征，难以直接向量化；
+      <strong>(2)</strong> 模型间存在复杂的关联关系（继承、组合、依赖），需要保留拓扑结构；
+      <strong>(3)</strong> AI Agent 需要实时检索相关知识作为上下文，检索延迟直接影响 Agent 响应速度；
+      <strong>(4)</strong> 知识库需要随工程迭代持续更新，支持增量索引。
+    </p>
+  </div>
+</section>
+
+<!-- === 02 ARCHITECTURE === -->
+<section class="kb-section">
+  <div class="kb-section-header">
+    <span class="kb-section-num">02</span>
+    <span class="kb-section-title">系统架构</span>
+  </div>
+  <div class="kb-section-body">
+    <p>系统采用六层架构，从数据摄入到 Agent 上下文输出形成完整闭环：</p>
+
+    <div class="arch-diagram">
+      <div class="arch-layers">
+        <div class="arch-layer">
+          <div class="arch-layer-label">数据摄入</div>
+          <div class="arch-modules">
+            <div class="arch-module mod-intake">
+              <span class="icon"><i class="fas fa-file-alt"></i></span>
+              工程文档
+              <div class="desc">PDF / DOCX / MD</div>
+            </div>
+            <div class="arch-module mod-intake">
+              <span class="icon"><i class="fas fa-project-diagram"></i></span>
+              SysML 模型
+              <div class="desc">BDD / STM / IBD</div>
+            </div>
+            <div class="arch-module mod-intake">
+              <span class="icon"><i class="fas fa-cube"></i></span>
+              组件规范
+              <div class="desc">CML 定义</div>
+            </div>
+          </div>
+        </div>
+        <div class="arch-arrow"><i class="fas fa-chevron-down"></i></div>
+        <div class="arch-layer">
+          <div class="arch-layer-label">向量化</div>
+          <div class="arch-modules">
+            <div class="arch-module mod-embed">
+              <span class="icon"><i class="fas fa-font"></i></span>
+              文本分块
+              <div class="desc">Chunking</div>
+            </div>
+            <div class="arch-module mod-embed">
+              <span class="icon"><i class="fas fa-vector-square"></i></span>
+              Embedding
+              <div class="desc">BGE-M3</div>
+            </div>
+            <div class="arch-module mod-embed">
+              <span class="icon"><i class="fas fa-sitemap"></i></span>
+              关系抽取
+              <div class="desc">Graph Extract</div>
+            </div>
+          </div>
+        </div>
+        <div class="arch-arrow"><i class="fas fa-chevron-down"></i></div>
+        <div class="arch-layer">
+          <div class="arch-layer-label">存储</div>
+          <div class="arch-modules">
+            <div class="arch-module mod-store">
+              <span class="icon"><i class="fas fa-database"></i></span>
+              Milvus
+              <div class="desc">向量索引</div>
+            </div>
+            <div class="arch-module mod-store">
+              <span class="icon"><i class="fas fa-table"></i></span>
+              BM25 索引
+              <div class="desc">Elasticsearch</div>
+            </div>
+            <div class="arch-module mod-store">
+              <span class="icon"><i class="fas fa-project-diagram"></i></span>
+              知识图谱
+              <div class="desc">Neo4j</div>
+            </div>
+          </div>
+        </div>
+        <div class="arch-arrow"><i class="fas fa-chevron-down"></i></div>
+        <div class="arch-layer">
+          <div class="arch-layer-label">检索</div>
+          <div class="arch-modules">
+            <div class="arch-module mod-retrieve">
+              <span class="icon"><i class="fas fa-search"></i></span>
+              向量检索
+              <div class="desc">Top-K ANN</div>
+            </div>
+            <div class="arch-module mod-retrieve">
+              <span class="icon"><i class="fas fa-list-ol"></i></span>
+              BM25 检索
+              <div class="desc">关键词匹配</div>
+            </div>
+            <div class="arch-module mod-retrieve">
+              <span class="icon"><i class="fas fa-code-branch"></i></span>
+              RRF 融合
+              <div class="desc">Reciprocal Rank</div>
+            </div>
+          </div>
+        </div>
+        <div class="arch-arrow"><i class="fas fa-chevron-down"></i></div>
+        <div class="arch-layer">
+          <div class="arch-layer-label">重排序</div>
+          <div class="arch-modules">
+            <div class="arch-module mod-rerank" style="flex:3;">
+              <span class="icon"><i class="fas fa-sort-amount-down"></i></span>
+              BGE Reranker
+              <div class="desc">Cross-Encoder 精排 · 语义相关性打分</div>
+            </div>
+          </div>
+        </div>
+        <div class="arch-arrow"><i class="fas fa-chevron-down"></i></div>
+        <div class="arch-layer">
+          <div class="arch-layer-label">输出</div>
+          <div class="arch-modules">
+            <div class="arch-module mod-output" style="flex:3;">
+              <span class="icon"><i class="fas fa-robot"></i></span>
+              Agent 上下文注入
+              <div class="desc">Few-shot Context · Prompt Engineering</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- === 03 RAG FLOW === -->
+<section class="kb-section">
+  <div class="kb-section-header">
+    <span class="kb-section-num">03</span>
+    <span class="kb-section-title">RAG 检索流程</span>
+  </div>
+  <div class="kb-section-body">
+    <p>当 AI Agent 需要理解某个 SysML 概念或查找可复用组件时，触发以下检索流程：</p>
+
+    <div class="flow-diagram">
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="num">STEP 1</div>
+          <div class="name">Query 理解</div>
+          <div class="detail">Agent 生成检索意图</div>
+        </div>
+        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="flow-step">
+          <div class="num">STEP 2</div>
+          <div class="name">双路检索</div>
+          <div class="detail">向量 + BM25 并行</div>
+        </div>
+        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="flow-step">
+          <div class="num">STEP 3</div>
+          <div class="name">RRF 融合</div>
+          <div class="detail">倒数排名合并</div>
+        </div>
+        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="flow-step">
+          <div class="num">STEP 4</div>
+          <div class="name">BGE 重排序</div>
+          <div class="detail">Cross-Encoder 精排</div>
+        </div>
+        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="flow-step">
+          <div class="num">STEP 5</div>
+          <div class="name">上下文注入</div>
+          <div class="detail">Top-N → Agent Prompt</div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      <strong>双路检索 + RRF 融合</strong>是核心设计。向量检索擅长语义匹配（"状态机" ↔ "状态转换"），
+      BM25 擅长精确关键词匹配（模型 ID、组件名称）。两路结果通过 <strong>RRF（Reciprocal Rank Fusion）</strong>
+      算法合并排名：对每个文档，计算其在两路检索中排名倒数的加权和，得到融合排名。
+      这种方法避免了不同检索器分数尺度不一致的问题，且无需训练。
+    </p>
+
+    <div class="code-block">
+<span class="cm"># RRF 融合算法核心实现</span>
+<span class="kw">def</span> <span class="fn">rrf_fusion</span>(<span class="var">vector_results</span>, <span class="var">bm25_results</span>, <span class="var">k</span>=<span class="str">60</span>):
+    scores = {}
+    <span class="kw">for</span> rank, doc <span class="kw">in</span> <span class="fn">enumerate</span>(vector_results):
+        scores[doc.id] = scores.<span class="fn">get</span>(doc.id, <span class="str">0</span>) + <span class="str">1</span> / (k + rank + <span class="str">1</span>)
+    <span class="kw">for</span> rank, doc <span class="kw">in</span> <span class="fn">enumerate</span>(bm25_results):
+        scores[doc.id] = scores.<span class="fn">get</span>(doc.id, <span class="str">0</span>) + <span class="str">1</span> / (k + rank + <span class="str">1</span>)
+    <span class="kw">return</span> <span class="fn">sorted</span>(scores.items(), key=<span class="kw">lambda</span> x: -x[<span class="str">1</span>])[:<span class="str">20</span>]
+    </div>
+  </div>
+</section>
+
+<!-- === 04 KNOWLEDGE TYPES === -->
+<section class="kb-section">
+  <div class="kb-section-header">
+    <span class="kb-section-num">04</span>
+    <span class="kb-section-title">知识库内容</span>
+  </div>
+  <div class="kb-section-body">
+    <p>知识库覆盖三类领域知识，各有不同的向量化策略：</p>
+
+    <div class="knowledge-types">
+      <div class="knowledge-card k1">
+        <div class="type-icon"><i class="fas fa-project-diagram"></i></div>
+        <div class="type-title">SysML 模型知识</div>
+        <div class="type-desc">
+          BDD（块定义图）、STM（状态机图）、IBD（内部块图）等模型定义。
+          解析为结构化 JSON 后向量化，保留模型间的继承和组合关系。
+        </div>
+        <div class="type-tags">
+          <span class="type-tag">BDD</span>
+          <span class="type-tag">STM</span>
+          <span class="type-tag">IBD</span>
+          <span class="type-tag">REQ</span>
+        </div>
+      </div>
+      <div class="knowledge-card k2">
+        <div class="type-icon"><i class="fas fa-cube"></i></div>
+        <div class="type-title">组件规范知识</div>
+        <div class="type-desc">
+          基于组件元语言(CML)定义的可复用组件规范，包含属性、事件、方法签名。
+          直接向量化存储，支持按组件名和功能描述检索。
+        </div>
+        <div class="type-tags">
+          <span class="type-tag">CML</span>
+          <span class="type-tag">Props</span>
+          <span class="type-tag">Events</span>
+          <span class="type-tag">API</span>
+        </div>
+      </div>
+      <div class="knowledge-card k3">
+        <div class="type-icon"><i class="fas fa-file-alt"></i></div>
+        <div class="type-title">工程文档知识</div>
+        <div class="type-desc">
+          需求文档、设计说明、接口规范等非结构化文档。
+          按 heading 分块后向量化，保留文档层级结构用于上下文增强。
+        </div>
+        <div class="type-tags">
+          <span class="type-tag">PDF</span>
+          <span class="type-tag">DOCX</span>
+          <span class="type-tag">MD</span>
+          <span class="type-tag">REQ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- === 05 AGENT SYNERGY === -->
+<section class="kb-section">
+  <div class="kb-section-header">
+    <span class="kb-section-num">05</span>
+    <span class="kb-section-title">多 Agent 知识协同</span>
+  </div>
+  <div class="kb-section-body">
+    <p>
+      知识库服务于 MBSE 平台的 11 个专职 Agent。每个 Agent 在执行任务前，先通过 RAG 检索获取相关领域知识，
+      将检索结果作为 Few-shot 上下文注入 Prompt。这种设计让 Agent 的行为从"凭空生成"变为"基于工程规范生成"。
+    </p>
+
+    <div class="synergy-diagram">
+      <div class="synergy-center">
+        <div class="synergy-hub">
+          RAG 知识库
+          <div class="sub">CENTRAL RETRIEVAL</div>
+        </div>
+      </div>
+      <div class="synergy-agents">
+        <div class="synergy-agent">
+          <div class="agent-icon"><i class="fas fa-code"></i></div>
+          <div class="agent-name">建模 Agent</div>
+          <div class="agent-task">检索模型规范</div>
+        </div>
+        <div class="synergy-agent">
+          <div class="agent-icon"><i class="fas fa-bug"></i></div>
+          <div class="agent-name">Bug修复 Agent</div>
+          <div class="agent-task">检索错误模式</div>
+        </div>
+        <div class="synergy-agent">
+          <div class="agent-icon"><i class="fas fa-code-branch"></i></div>
+          <div class="agent-name">PR Agent</div>
+          <div class="agent-task">检索变更规范</div>
+        </div>
+        <div class="synergy-agent">
+          <div class="agent-icon"><i class="fas fa-vial"></i></div>
+          <div class="agent-name">测试 Agent</div>
+          <div class="agent-task">检索测试用例</div>
+        </div>
+        <div class="synergy-agent">
+          <div class="agent-icon"><i class="fas fa-clipboard-check"></i></div>
+          <div class="agent-name">审查 Agent</div>
+          <div class="agent-task">检索质量标准</div>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      <strong>关键设计：</strong>每个 Agent 有自己的检索模板（Query Template），将任务上下文转化为检索意图。
+      例如建模 Agent 的模板是 <code style="background:var(--kb-paper-2); padding:2px 6px; font-family:'IBM Plex Mono',monospace; font-size:12px;">"SysML {model_type} definition for {component_name}"</code>，
+      确保检索结果与当前建模任务高度相关。
+    </p>
+  </div>
+</section>
+
+<!-- === 06 TECH STACK === -->
+<section class="kb-section">
+  <div class="kb-section-header">
+    <span class="kb-section-num">06</span>
+    <span class="kb-section-title">技术栈</span>
+  </div>
+  <div class="kb-section-body">
+    <div class="tech-grid">
+      <div class="tech-item">
+        <div class="tech-icon"><i class="fas fa-database"></i></div>
+        <div class="tech-info">
+          <div class="name">Milvus</div>
+          <div class="role">向量数据库 · ANN 检索</div>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon"><i class="fas fa-sort-amount-down"></i></div>
+        <div class="tech-info">
+          <div class="name">BGE Reranker</div>
+          <div class="role">重排序模型 · Cross-Encoder</div>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon"><i class="fas fa-link"></i></div>
+        <div class="tech-info">
+          <div class="name">LangChain</div>
+          <div class="role">编排框架 · Retriever 封装</div>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon"><i class="fas fa-list-ol"></i></div>
+        <div class="tech-info">
+          <div class="name">BM25</div>
+          <div class="role">文本检索 · 关键词匹配</div>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon"><i class="fas fa-code-branch"></i></div>
+        <div class="tech-info">
+          <div class="name">RRF</div>
+          <div class="role">融合算法 · 排名合并</div>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon"><i class="fas fa-font"></i></div>
+        <div class="tech-info">
+          <div class="name">BGE-M3</div>
+          <div class="role">Embedding 模型</div>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon"><i class="fas fa-project-diagram"></i></div>
+        <div class="tech-info">
+          <div class="name">Neo4j</div>
+          <div class="role">知识图谱 · 关系存储</div>
+        </div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon"><i class="fas fa-robot"></i></div>
+        <div class="tech-info">
+          <div class="name">MCP</div>
+          <div class="role">工具协议 · Agent 集成</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- === 07 RESULTS === -->
+<section class="kb-section">
+  <div class="kb-section-header">
+    <span class="kb-section-num">07</span>
+    <span class="kb-section-title">关键成果</span>
+  </div>
+  <div class="kb-section-body">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="icon"><i class="fas fa-database"></i></div>
+        <div class="value">500<span class="unit">+</span></div>
+        <div class="label">SysML 模型定义索引</div>
+      </div>
+      <div class="stat-card">
+        <div class="icon"><i class="fas fa-bolt"></i></div>
+        <div class="value">200<span class="unit">ms</span></div>
+        <div class="label">检索延迟（P95）</div>
+      </div>
+      <div class="stat-card">
+        <div class="icon"><i class="fas fa-chart-line"></i></div>
+        <div class="value">40<span class="unit">%</span></div>
+        <div class="label">Agent 上下文准确率提升</div>
+      </div>
+      <div class="stat-card">
+        <div class="icon"><i class="fas fa-project-diagram"></i></div>
+        <div class="value">8<span class="unit">种</span></div>
+        <div class="label">模型关系语义检索</div>
+      </div>
+    </div>
+
+    <p>
+      <strong>核心价值：</strong>知识库让 AI Agent 从"凭空生成"升级为"基于工程规范生成"。
+      在 MBSE 建模场景中，Agent 能够自动检索相关 SysML 模型定义和组件规范，
+      生成的模型结构符合工程标准，减少了人工校验环节。
+      BGE Reranker 的引入将检索结果的前 5 条命中率从 65% 提升到 89%。
+    </p>
+  </div>
+</section>
+
+<!-- === 08 DOC LINK === -->
+<section class="kb-section">
+  <div class="kb-section-header">
+    <span class="kb-section-num">08</span>
+    <span class="kb-section-title">相关文档</span>
+  </div>
+  <div class="kb-section-body">
+    <a href="https://thyua4q5yd.feishu.cn/wiki/DHwZwolXUiSuB1k3PhNcYRtqnWG" target="_blank" class="doc-link">
+      <div class="doc-icon"><i class="fas fa-file-alt"></i></div>
+      <div class="doc-text">
+        <div class="doc-title">MBSE - AIGC 开发试探（飞书文档）</div>
+        <div class="doc-sub">包含多智能体开发工作流 V2.1、RAG 知识检索系统设计、跨流协同 SOP</div>
+      </div>
+      <div class="doc-arrow"><i class="fas fa-external-link-alt"></i></div>
+    </a>
+    <a href="https://thyua4q5yd.feishu.cn/wiki/LQlow2o6IibQ5dkzOA6c5sWrnzh" target="_blank" class="doc-link">
+      <div class="doc-icon"><i class="fas fa-file-alt"></i></div>
+      <div class="doc-text">
+        <div class="doc-title">新源溯前端架构设计（飞书文档）</div>
+        <div class="doc-sub">包含组件元语言(CML)、渲染引擎、缓存机制等 8 大核心模块设计</div>
+      </div>
+      <div class="doc-arrow"><i class="fas fa-external-link-alt"></i></div>
+    </a>
+  </div>
+</section>
+
+</body>
+</html>

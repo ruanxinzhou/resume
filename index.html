@@ -178,6 +178,38 @@
             </div>
             <p class="timeline-role">前端开发工程师 L6</p>
             <ul class="timeline-duties">
+
+      <div class="project-card project-card--ai">
+        <div class="project-header">
+          <h3>MBSE 领域知识库与 RAG 检索系统 <span class="project-new-badge">RAG</span></h3>
+          <span class="project-role">核心开发者</span>
+          <span class="project-period">2026.05 - 至今</span>
+        </div>
+        <div class="project-tech">
+          <span class="tech-tag">RAG</span>
+          <span class="tech-tag">Milvus</span>
+          <span class="tech-tag">BGE Reranker</span>
+          <span class="tech-tag">BM25</span>
+          <span class="tech-tag">RRF</span>
+          <span class="tech-tag">LangChain</span>
+          <span class="tech-tag">Neo4j</span>
+          <span class="tech-tag">MCP</span>
+        </div>
+        <p class="project-desc">面向 MBSE 领域的知识库建设，基于 RAG 架构实现 SysML 模型知识检索。覆盖文档摄入、向量化、多路检索、BGE 重排序到 Agent 上下文增强的全链路，服务于11个专职Agent的知识协同。</p>
+        <ul class="project-achievements">
+          <li><strong>RAG检索架构：</strong>设计向量检索+BM25双路检索，通过RRF融合算法合并排名，BGE Reranker精排，Top-5命中率从65%提升至89%</li>
+          <li><strong>领域知识库建设：</strong>索引500+ SysML模型定义、组件规范和工程文档，支持8种模型关系的语义检索</li>
+          <li><strong>Agent上下文增强：</strong>设计Query Template机制，将Agent任务上下文转化为检索意图，检索结果作为Few-shot注入Prompt</li>
+          <li><strong>性能优化：</strong>检索延迟P95控制在200ms以内，支持增量索引和实时更新</li>
+        </ul>
+        <div class="project-links">
+          <a href="/projects/knowledge-base.html" class="project-detail-btn project-detail-btn--purple">
+            <i class="fas fa-database"></i>
+            <span>查看架构图与流程图</span>
+            <i class="fas fa-arrow-right btn-arrow"></i>
+          </a>
+        </div>
+      </div>
               <li>主导AI驱动的软件开发全生命周期平台（AISDLC Flow）的前端架构与全栈开发</li>
               <li>设计并实现基于AST的Vue2→React自动化迁移工具（banma-migrator）</li>
               <li>负责星火App运营管理端30+业务模块的前端开发与平台化建设</li>
