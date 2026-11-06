@@ -1148,11 +1148,18 @@ body {
 }
 
 /* ============================================================
-   Print
+   Print — Compact 2-page A4 layout
    ============================================================ */
 @media print {
+  @page {
+    size: A4;
+    margin: 8mm 10mm;
+  }
+
   body {
     background: white;
+    font-size: 9.5pt;
+    line-height: 1.4;
   }
 
   .resume-container {
@@ -1163,6 +1170,277 @@ body {
   .resume {
     box-shadow: none;
     border-radius: 0;
+    border: none;
+    overflow: visible;
+  }
+
+  /* ── Header ── */
+  .resume-header {
+    padding: 18px 28px;
+  }
+
+  .resume-header::before,
+  .resume-header::after {
+    display: none;
+  }
+
+  .header-content {
+    gap: 16px;
+  }
+
+  .profile-info .name {
+    font-size: 1.6rem;
+    margin-bottom: 4px;
+  }
+
+  .profile-info .title {
+    font-size: 0.92rem;
+    margin-bottom: 8px;
+  }
+
+  .meta-item {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+  }
+
+  .contact-info {
+    gap: 5px;
+  }
+
+  .contact-item {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+  }
+
+  /* ── Main ── */
+  .resume-main {
+    padding: 18px 28px;
+  }
+
+  .section {
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: 0.92rem;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+  }
+
+  .title-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 0.7rem;
+  }
+
+  /* ── Skills ── */
+  .skills-grid {
+    gap: 8px;
+  }
+
+  .skill-card {
+    padding: 10px 12px;
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+  }
+
+  .skill-card::before,
+  .skill-card::after {
+    display: none;
+  }
+
+  .skill-header {
+    margin-bottom: 6px;
+  }
+
+  .skill-header i {
+    font-size: 0.85rem;
+  }
+
+  .skill-header h3 {
+    font-size: 0.82rem;
+  }
+
+  .skill-card p {
+    font-size: 0.72rem;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  .tag {
+    font-size: 0.65rem;
+    padding: 1px 6px;
+  }
+
+  /* ── Timeline ── */
+  .timeline {
+    padding-left: 16px;
+  }
+
+  .timeline::before {
+    top: 6px;
+    bottom: 6px;
+  }
+
+  .timeline-item {
+    padding-bottom: 10px;
+  }
+
+  .timeline-marker {
+    left: -16px;
+    width: 8px;
+    height: 8px;
+    border-width: 2px;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  }
+
+  .timeline-content {
+    padding: 10px 14px;
+    box-shadow: none;
+  }
+
+  .timeline-header h3 {
+    font-size: 0.88rem;
+  }
+
+  .timeline-period {
+    font-size: 0.7rem;
+    padding: 2px 7px;
+  }
+
+  .timeline-role {
+    font-size: 0.78rem;
+    margin-bottom: 6px;
+  }
+
+  .timeline-duties li {
+    font-size: 0.74rem;
+    margin-bottom: 3px;
+    line-height: 1.4;
+    padding-left: 10px;
+  }
+
+  .timeline-duties li::before {
+    width: 4px;
+    height: 4px;
+    top: 6px;
+  }
+
+  /* ── Project Cards ── */
+  .project-card {
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+    break-inside: avoid;
+  }
+
+  .project-card::before {
+    height: 2px;
+  }
+
+  .project-header {
+    margin-bottom: 6px;
+    gap: 6px;
+  }
+
+  .project-header h3 {
+    font-size: 0.88rem;
+  }
+
+  .project-role {
+    font-size: 0.68rem;
+    padding: 2px 7px;
+  }
+
+  .project-period {
+    font-size: 0.68rem;
+  }
+
+  .project-tech {
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .tech-tag {
+    font-size: 0.65rem;
+    padding: 1px 6px;
+  }
+
+  .project-desc {
+    font-size: 0.76rem;
+    margin-bottom: 8px;
+    line-height: 1.45;
+  }
+
+  .project-achievements li {
+    font-size: 0.73rem;
+    margin-bottom: 4px;
+    line-height: 1.42;
+    padding-left: 12px;
+  }
+
+  .project-achievements li::before {
+    font-size: 0.68rem;
+  }
+
+  /* ── Education ── */
+  .education-grid {
+    gap: 8px;
+  }
+
+  .education-card {
+    padding: 10px 14px;
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+  }
+
+  .education-card::before {
+    display: none;
+  }
+
+  .education-school {
+    margin-bottom: 6px;
+  }
+
+  .education-school h3 {
+    font-size: 0.85rem;
+  }
+
+  .education-major {
+    font-size: 0.78rem;
+    margin-bottom: 3px;
+  }
+
+  .education-degree {
+    font-size: 0.65rem;
+    margin-bottom: 4px;
+  }
+
+  .education-period {
+    font-size: 0.7rem;
+  }
+
+  /* ── Certificates ── */
+  .certificates-list {
+    gap: 6px;
+  }
+
+  .certificate-item {
+    padding: 5px 10px;
+    font-size: 0.78rem;
+    box-shadow: none;
+    border: 1px solid var(--border-color);
+  }
+
+  /* ── Footer ── */
+  .resume-footer {
+    padding: 10px 28px;
+  }
+
+  .resume-footer p {
+    font-size: 0.74rem;
+    margin-bottom: 0;
   }
 
   .print-btn,
@@ -1170,8 +1448,6 @@ body {
     display: none;
   }
 
-  .project-card,
-  .skill-card,
   .sub-project {
     break-inside: avoid;
   }
@@ -1193,10 +1469,6 @@ body {
   * {
     animation: none !important;
     transition: none !important;
-  }
-
-  @page {
-    margin: 10mm;
   }
 }
 
