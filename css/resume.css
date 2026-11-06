@@ -1175,6 +1175,29 @@ body {
   .sub-project {
     break-inside: avoid;
   }
+
+  /* Override scroll-reveal inline styles for print */
+  .section,
+  .skill-card,
+  .project-card,
+  .education-card,
+  .timeline-item {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* Disable all animations in print */
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  @page {
+    margin: 10mm;
+  }
 }
 
 /* ============================================================
