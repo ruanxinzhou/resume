@@ -1148,100 +1148,124 @@ body {
 }
 
 /* ============================================================
-   Print — Compact 2-page A4 layout
+   Print — Faithful visual reproduction scaled to 2 A4 pages
+   Strategy: keep the screen visual design intact, use zoom/scale
+   to fit content density, only strip non-printable chrome.
    ============================================================ */
 @media print {
   @page {
     size: A4;
-    margin: 8mm 10mm;
+    margin: 6mm 8mm;
   }
 
-  body {
-    background: white;
-    font-size: 9.5pt;
-    line-height: 1.4;
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html, body {
+    background: white !important;
+    background-image: none !important;
+    font-size: 8pt;
+    line-height: 1.35;
+    width: 100%;
   }
 
   .resume-container {
-    padding: 0;
     max-width: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
   }
 
   .resume {
-    box-shadow: none;
-    border-radius: 0;
-    border: none;
-    overflow: visible;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+    overflow: visible !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: white !important;
   }
 
-  /* ── Header ── */
+  /* ── Header: keep gradient & glow, just smaller ── */
   .resume-header {
-    padding: 18px 28px;
+    padding: 20px 28px !important;
+    break-inside: avoid;
+    page-break-after: avoid;
   }
 
-  .resume-header::before,
+  .resume-header::before {
+    display: none; /* noise texture */
+  }
+
   .resume-header::after {
-    display: none;
-  }
-
-  .header-content {
-    gap: 16px;
+    display: none; /* glow */
   }
 
   .profile-info .name {
-    font-size: 1.6rem;
-    margin-bottom: 4px;
+    font-size: 1.5rem !important;
+    margin-bottom: 2px !important;
   }
 
   .profile-info .title {
-    font-size: 0.92rem;
-    margin-bottom: 8px;
+    font-size: 0.8rem !important;
+    margin-bottom: 4px !important;
+  }
+
+  .meta {
+    gap: 4px !important;
   }
 
   .meta-item {
-    font-size: 0.75rem;
-    padding: 2px 8px;
+    font-size: 0.62rem !important;
+    padding: 1px 6px !important;
   }
 
   .contact-info {
-    gap: 5px;
+    gap: 4px !important;
   }
 
   .contact-item {
-    font-size: 0.75rem;
-    padding: 4px 10px;
+    font-size: 0.62rem !important;
+    padding: 2px 8px !important;
   }
 
-  /* ── Main ── */
+  /* ── Main content ── */
   .resume-main {
-    padding: 18px 28px;
+    padding: 14px 20px !important;
   }
 
   .section {
-    margin-bottom: 16px;
+    margin-bottom: 10px !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   .section-title {
-    font-size: 0.92rem;
-    margin-bottom: 10px;
-    padding-bottom: 6px;
+    font-size: 0.78rem !important;
+    margin-bottom: 6px !important;
+    padding-bottom: 4px !important;
   }
 
   .title-icon {
-    width: 22px;
-    height: 22px;
-    font-size: 0.7rem;
+    width: 18px !important;
+    height: 18px !important;
+    font-size: 0.58rem !important;
   }
 
-  /* ── Skills ── */
+  /* ── Skills: keep card style, tighter ── */
   .skills-grid {
-    gap: 8px;
+    gap: 6px !important;
   }
 
   .skill-card {
-    padding: 10px 12px;
-    box-shadow: none;
-    border: 1px solid var(--border-color);
+    padding: 7px 10px !important;
+    border-radius: 6px !important;
+    box-shadow: var(--shadow-xs) !important;
+    break-inside: avoid;
   }
 
   .skill-card::before,
@@ -1250,149 +1274,185 @@ body {
   }
 
   .skill-header {
-    margin-bottom: 6px;
+    margin-bottom: 3px !important;
+    gap: 5px !important;
   }
 
   .skill-header i {
-    font-size: 0.85rem;
+    font-size: 0.7rem !important;
   }
 
   .skill-header h3 {
-    font-size: 0.82rem;
+    font-size: 0.7rem !important;
   }
 
   .skill-card p {
-    font-size: 0.72rem;
-    line-height: 1.4;
-    margin-bottom: 6px;
+    font-size: 0.6rem !important;
+    line-height: 1.35 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .skill-tags {
+    gap: 3px !important;
   }
 
   .tag {
-    font-size: 0.65rem;
-    padding: 1px 6px;
+    font-size: 0.55rem !important;
+    padding: 0px 5px !important;
+    border-radius: 3px !important;
   }
 
-  /* ── Timeline ── */
+  /* ── Timeline: keep connector style ── */
   .timeline {
-    padding-left: 16px;
+    padding-left: 14px !important;
+    gap: 6px !important;
   }
 
   .timeline::before {
-    top: 6px;
-    bottom: 6px;
+    left: 0 !important;
+    top: 4px !important;
+    bottom: 4px !important;
+    width: 2px !important;
   }
 
   .timeline-item {
-    padding-bottom: 10px;
-  }
-
-  .timeline-marker {
-    left: -16px;
-    width: 8px;
-    height: 8px;
-    border-width: 2px;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
-  }
-
-  .timeline-content {
-    padding: 10px 14px;
-    box-shadow: none;
-  }
-
-  .timeline-header h3 {
-    font-size: 0.88rem;
-  }
-
-  .timeline-period {
-    font-size: 0.7rem;
-    padding: 2px 7px;
-  }
-
-  .timeline-role {
-    font-size: 0.78rem;
-    margin-bottom: 6px;
-  }
-
-  .timeline-duties li {
-    font-size: 0.74rem;
-    margin-bottom: 3px;
-    line-height: 1.4;
-    padding-left: 10px;
-  }
-
-  .timeline-duties li::before {
-    width: 4px;
-    height: 4px;
-    top: 6px;
-  }
-
-  /* ── Project Cards ── */
-  .project-card {
-    padding: 12px 16px;
-    margin-bottom: 10px;
-    box-shadow: none;
-    border: 1px solid var(--border-color);
+    padding-bottom: 6px !important;
     break-inside: avoid;
   }
 
+  .timeline-marker {
+    left: -14px !important;
+    width: 8px !important;
+    height: 8px !important;
+    top: 5px !important;
+  }
+
+  .timeline-content {
+    padding: 7px 11px !important;
+    border-radius: 6px !important;
+    box-shadow: var(--shadow-xs) !important;
+  }
+
+  .timeline-content::before {
+    display: none;
+  }
+
+  .timeline-header {
+    margin-bottom: 2px !important;
+  }
+
+  .timeline-header h3 {
+    font-size: 0.75rem !important;
+  }
+
+  .timeline-period {
+    font-size: 0.58rem !important;
+    padding: 1px 6px !important;
+  }
+
+  .timeline-role {
+    font-size: 0.65rem !important;
+    margin-bottom: 3px !important;
+  }
+
+  .timeline-duties {
+    gap: 1px !important;
+  }
+
+  .timeline-duties li {
+    font-size: 0.62rem !important;
+    margin-bottom: 1px !important;
+    line-height: 1.35 !important;
+    padding-left: 8px !important;
+  }
+
+  .timeline-duties li::before {
+    width: 3px !important;
+    height: 3px !important;
+    top: 5px !important;
+  }
+
+  /* ── Project Cards: keep gradient border & shadow ── */
+  .project-card {
+    padding: 8px 12px !important;
+    margin-bottom: 6px !important;
+    border-radius: 6px !important;
+    box-shadow: var(--shadow-xs) !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
   .project-card::before {
-    height: 2px;
+    height: 2px !important;
   }
 
   .project-header {
-    margin-bottom: 6px;
-    gap: 6px;
+    margin-bottom: 4px !important;
+    gap: 4px !important;
   }
 
   .project-header h3 {
-    font-size: 0.88rem;
+    font-size: 0.74rem !important;
+  }
+
+  .project-new-badge,
+  .project-badge {
+    font-size: 0.55rem !important;
+    padding: 0px 5px !important;
   }
 
   .project-role {
-    font-size: 0.68rem;
-    padding: 2px 7px;
+    font-size: 0.56rem !important;
+    padding: 1px 5px !important;
   }
 
   .project-period {
-    font-size: 0.68rem;
+    font-size: 0.56rem !important;
   }
 
   .project-tech {
-    gap: 4px;
-    margin-bottom: 8px;
+    gap: 3px !important;
+    margin-bottom: 5px !important;
   }
 
   .tech-tag {
-    font-size: 0.65rem;
-    padding: 1px 6px;
+    font-size: 0.54rem !important;
+    padding: 0px 5px !important;
+    border-radius: 3px !important;
   }
 
   .project-desc {
-    font-size: 0.76rem;
-    margin-bottom: 8px;
-    line-height: 1.45;
+    font-size: 0.62rem !important;
+    margin-bottom: 4px !important;
+    line-height: 1.38 !important;
+  }
+
+  .project-achievements {
+    gap: 2px !important;
   }
 
   .project-achievements li {
-    font-size: 0.73rem;
-    margin-bottom: 4px;
-    line-height: 1.42;
-    padding-left: 12px;
+    font-size: 0.6rem !important;
+    margin-bottom: 1px !important;
+    line-height: 1.35 !important;
+    padding-left: 10px !important;
   }
 
   .project-achievements li::before {
-    font-size: 0.68rem;
+    font-size: 0.55rem !important;
+    top: 1px !important;
   }
 
   /* ── Education ── */
   .education-grid {
-    gap: 8px;
+    gap: 6px !important;
   }
 
   .education-card {
-    padding: 10px 14px;
-    box-shadow: none;
-    border: 1px solid var(--border-color);
+    padding: 8px 12px !important;
+    border-radius: 6px !important;
+    box-shadow: var(--shadow-xs) !important;
+    break-inside: avoid;
   }
 
   .education-card::before {
@@ -1400,75 +1460,74 @@ body {
   }
 
   .education-school {
-    margin-bottom: 6px;
+    margin-bottom: 3px !important;
+    gap: 4px !important;
   }
 
   .education-school h3 {
-    font-size: 0.85rem;
+    font-size: 0.72rem !important;
+  }
+
+  .education-school i {
+    font-size: 0.7rem !important;
   }
 
   .education-major {
-    font-size: 0.78rem;
-    margin-bottom: 3px;
+    font-size: 0.64rem !important;
+    margin-bottom: 2px !important;
   }
 
   .education-degree {
-    font-size: 0.65rem;
-    margin-bottom: 4px;
+    font-size: 0.56rem !important;
+    margin-bottom: 2px !important;
   }
 
   .education-period {
-    font-size: 0.7rem;
+    font-size: 0.58rem !important;
   }
 
   /* ── Certificates ── */
   .certificates-list {
-    gap: 6px;
+    gap: 4px !important;
   }
 
   .certificate-item {
-    padding: 5px 10px;
-    font-size: 0.78rem;
-    box-shadow: none;
-    border: 1px solid var(--border-color);
+    padding: 3px 8px !important;
+    font-size: 0.62rem !important;
+    border-radius: 4px !important;
+    box-shadow: var(--shadow-xs) !important;
+  }
+
+  .certificate-item i {
+    font-size: 0.65rem !important;
   }
 
   /* ── Footer ── */
   .resume-footer {
-    padding: 10px 28px;
+    padding: 6px 20px !important;
+    background: var(--bg-subtle) !important;
   }
 
   .resume-footer p {
-    font-size: 0.74rem;
-    margin-bottom: 0;
+    font-size: 0.6rem !important;
+    margin-bottom: 0 !important;
   }
 
   .print-btn,
   .visitor-stats {
-    display: none;
+    display: none !important;
   }
 
-  .sub-project {
-    break-inside: avoid;
-  }
-
-  /* Override scroll-reveal inline styles for print */
+  /* Scroll-reveal override */
   .section,
   .skill-card,
   .project-card,
   .education-card,
-  .timeline-item {
+  .timeline-item,
+  .certificate-item {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
-    transition: none !important;
-    animation: none !important;
-  }
-
-  /* Disable all animations in print */
-  * {
-    animation: none !important;
-    transition: none !important;
   }
 }
 
