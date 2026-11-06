@@ -1172,6 +1172,39 @@ body {
     font-size: 8pt;
     line-height: 1.35;
     width: 100%;
+    min-width: 0 !important;
+  }
+
+  /* ── Override responsive breakpoints for print ── */
+  .header-content {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+  }
+
+  .profile-info {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+
+  .contact-info {
+    flex-direction: column !important;
+    flex-shrink: 0 !important;
+    width: auto !important;
+  }
+
+  .skills-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  .education-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
   }
 
   .resume-container {
@@ -1274,6 +1307,10 @@ body {
   }
 
   .skill-header {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
     margin-bottom: 3px !important;
     gap: 5px !important;
   }
@@ -1338,11 +1375,18 @@ body {
   }
 
   .timeline-header {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
     margin-bottom: 2px !important;
+    gap: 6px !important;
   }
 
   .timeline-header h3 {
     font-size: 0.75rem !important;
+    flex-shrink: 0 !important;
   }
 
   .timeline-period {
@@ -1387,27 +1431,40 @@ body {
   }
 
   .project-header {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
     margin-bottom: 4px !important;
     gap: 4px !important;
   }
 
   .project-header h3 {
     font-size: 0.74rem !important;
+    flex-shrink: 1 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
   .project-new-badge,
   .project-badge {
     font-size: 0.55rem !important;
     padding: 0px 5px !important;
+    flex-shrink: 0 !important;
   }
 
   .project-role {
     font-size: 0.56rem !important;
     padding: 1px 5px !important;
+    flex-shrink: 0 !important;
   }
 
   .project-period {
     font-size: 0.56rem !important;
+    margin-left: auto !important;
+    flex-shrink: 0 !important;
   }
 
   .project-tech {
